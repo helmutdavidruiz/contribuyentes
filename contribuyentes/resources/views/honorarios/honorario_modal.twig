@@ -1,0 +1,75 @@
+<div class="modal fade" id="{{ modal.id }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ modal.title }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+               <div class="form-outline form-white mb-4">
+                    <input type="datetime-local" name="fecha" required
+                           class="form-control form-control-lg"
+                           placeholder="Fecha" />
+                </div>
+              <div class="row">
+               <div class="col-md-6">
+                 <div class="form-outline form-white mb-4">
+                    <input type="number" name="honorario" required
+                           class="form-control form-control-lg"
+                           placeholder="$ Honorario" />
+                </div>
+               </div>
+               <div class="col-md-6">
+                 <div class="form-outline form-white mb-4">
+                    <input type="number" name="impuesto" required
+                           class="form-control form-control-lg"
+                           placeholder="$ Impuesto" />
+                </div>
+               </div>
+               <div class="col-md-6">
+                 <div class="form-outline form-white mb-4">
+                    <input type="number" name="transferencia" required
+                           class="form-control form-control-lg"
+                           placeholder="$ Transferencia" />
+                </div>
+               </div> 
+              </div>
+               
+               <!--div class="form-outline form-white mb-4">
+                    <input type="number" name="total" required
+                           class="form-control form-control-lg"
+                           placeholder="$ Total" />
+                </div-->
+              
+                <div class="form-outline form-white mb-4">
+                    <input type="text" name="concepto" required
+                           class="form-control form-control-lg"
+                           placeholder="Concepto" />
+                </div>
+                <div class="form-outline form-white mb-4">
+                    <input type="text" name="observaciones" required
+                           class="form-control form-control-lg"
+                           placeholder="Observaciones" />
+                </div>
+                <div class="form-outline form-white mb-4">
+                    <select class="form-select form-select-lg" aria-label="Contribuyente" name="contribuyente">
+                        <option value="">Selecciona Contribuyente</option>
+                        {% for contribuyente in contribuyentes %}
+                            <option value="{{ contribuyente.id }}">{{ contribuyente.identificador }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle me-1"></i>
+                    Cerrar
+                </button>
+                <button type="button" class="btn btn-success {{ modal.isEdit ? 'save' : 'create' }}-honorario-btn">
+                    <i class="bi bi-check-circle me-1"></i>
+                    {{ modal.isEdit ? 'Save' : 'Create' }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

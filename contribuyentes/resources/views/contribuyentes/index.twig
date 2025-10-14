@@ -1,0 +1,45 @@
+{% extends 'layout.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('contribuyentes') }}
+{% endblock %}
+
+{% block title %}Contribuyentes{% endblock %}
+
+{% block content %}
+    <div class="contribuyentes container content-body">
+        <div class="text-end">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newContribuyenteModal">
+                <i class="bi bi-plus-circle me-1"></i>
+                Nuevo Contribuyente
+            </button>
+        </div>
+        {% include 'contribuyentes/contribuyente_modal.twig' with {modal: {title: 'Crear Contribuyente', id: 'newContribuyenteModal', isEdit: false}} %}
+        {% include 'contribuyentes/contribuyente_modal.twig' with {modal: {title: 'Editar Contribuyente', id: 'editContribuyenteModal', isEdit: true}} %}
+
+        <div>
+                <table id="contribuyentesTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombres</th>
+                            <th>Apellidos</th>
+                            <th>RFC</th>
+                            <th>CURP</th>
+                            <th>Telefono</th>
+                            <th>Email</th>
+                            <th>Regimen Fiscal</th>
+                            <th>Tipo Declaracion</th>
+                            <th>Impuesto Obligacion</th>
+                            <!--th>Crd</th>
+                            <th>Act</th-->
+                            <th>Accion</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+         </div>
+       
+    </div>
+{% endblock %}

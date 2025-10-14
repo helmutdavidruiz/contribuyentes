@@ -1,0 +1,76 @@
+<div class="modal fade" id="{{ modal.id }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ modal.title }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+               <div class="form-outline form-white mb-4">
+                                <input type="text" name="nombres" 
+                                       class="form-control form-control-lg"
+                                       placeholder="Nombres" />
+                             </div>
+                            
+                           
+                              <div class="form-outline form-white mb-4">
+                                <input type="text" name="apellidos"
+                                       class="form-control form-control-lg"
+                                       placeholder="Apellidos" />
+                             </div>
+                            
+                        
+                         
+                             <div class="form-outline form-white mb-4">
+                                <input type="text" name="rfc"
+                                       class="form-control form-control-lg"
+                                       placeholder="RFC" />
+                             </div>
+                            
+                           
+                             <div class="form-outline form-white mb-4">
+                                <input type="text" name="curp"
+                                       class="form-control form-control-lg"
+                                       placeholder="CURP" />
+                             </div>
+                           
+                         
+                             <div class="form-outline form-white mb-4">
+                                <input type="text" name="telefono"
+                                       class="form-control form-control-lg"
+                                       placeholder="Telefono" />
+                            </div>
+                             <div class="form-outline form-white mb-4">
+                                <input type="text" name="email"
+                                       class="form-control form-control-lg"
+                                       placeholder="Email"  />
+                            </div>
+                             <div class="form-outline form-white mb-4">
+                                <input type="text" name="regimenFiscal"
+                                       class="form-control form-control-lg"
+                                       placeholder="Regimen Fiscal" />
+                            </div>
+                             <div class="form-outline form-white mb-4">
+                                <input type="text" name="tipoDeclaracion"
+                                       class="form-control form-control-lg"
+                                       placeholder="Tipo Declaracion" />
+                            </div>
+                             <div class="form-outline form-white mb-4">
+                                <input type="text" name="impuestoObligacion"
+                                       class="form-control form-control-lg"
+                                       placeholder="Impuesto Obligacion" />
+                            </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="bi bi-x-circle me-1"></i>
+                    Cerrar
+                </button>
+                <button type="button" class="btn btn-success {{ modal.isEdit ? 'save' : 'create' }}-contribuyente-btn">
+                    <i class="bi bi-check-circle me-1"></i>
+                    {{ modal.isEdit ? 'Save' : 'Create' }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
