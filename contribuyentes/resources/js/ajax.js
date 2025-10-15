@@ -5,7 +5,8 @@ const ajax = (url, method = 'get', data = {}, domElement = null) => {
         method,
         headers: {
             'Content-Type': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest'
+            'X-Requested-With': 'XMLHttpRequest',
+            'Access-Control-Allow-Origin': '*'
         }
     }
 

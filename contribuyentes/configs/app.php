@@ -5,7 +5,9 @@ declare(strict_types = 1);
 use App\Enum\AppEnvironment;
 
 $appEnv = $_ENV['APP_ENV'] ?? AppEnvironment::Production->value;
-$appHelmutName = strtolower(str_replace(' ','_', $_ENV['APP_NAME']));
+$appHName = strtolower(str_replace(' ','_', $_ENV['APP_NAME']));
+
+
 
 return [
     'app_name'              => $_ENV['APP_NAME'],
@@ -15,7 +17,7 @@ return [
     'log_errors'            => true,
     'log_error_details'     => true,
     'doctrine'              => [
-        'dev_mode'   => AppEnvironment::isDevelopment($appEnv),
+        'dev_mode'   => AppEnvironment::isProduction($appEnv),
         'cache_dir'  => STORAGE_PATH . '/cache/doctrine',
         'entity_dir' => [APP_PATH . '/Entity'],
         'connection' => [
@@ -28,8 +30,8 @@ return [
         ],
     ],
     'session' => [
-        'name' => $appHelmutName . '_session',
-        'flash_name' => $appHelmutName . '_flash',
+        'name' => $appHName . '_session',
+        'flash_name' => $appHName . '_flash',
         'secure' => true,
         'httponly' => true,
         'samesite' => 'lax',

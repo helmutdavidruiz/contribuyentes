@@ -22,7 +22,7 @@ class Session implements SessionInterface
         }
 
         if(headers_sent($filename, $line)){
-            throw new SessionException('Headers ya han sido enviados');
+            throw new SessionException('Headers ya han sido enviados'. $filename .':'. $line);
         }
 
         session_set_cookie_params(['secure'   => $this->options->secure, 

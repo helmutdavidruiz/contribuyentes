@@ -2,14 +2,13 @@ import { Modal }          from "bootstrap"
 import { get, post, del } from "./ajax"
 import DataTable          from "datatables.net"
 
+
 window.addEventListener('DOMContentLoaded', function () {
     const newHonorarioModal  = new Modal(document.getElementById('newHonorarioModal'))
     const editHonorarioModal = new Modal(document.getElementById('editHonorarioModal'))
 
     const table = new DataTable('#honorariosTable', {
-        language: {
-        url: '//cdn.datatables.net/plug-ins/2.3.4/i18n/es-ES.json',
-       },
+        
         serverSide: true,
         ajax: '/honorarios/load',
         orderMulti: false,
