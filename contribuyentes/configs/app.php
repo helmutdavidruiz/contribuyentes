@@ -3,6 +3,7 @@
 declare(strict_types = 1);
 
 use App\Enum\AppEnvironment;
+use App\Enum\StorageDriver;
 
 $appEnv = $_ENV['APP_ENV'] ?? AppEnvironment::Production->value;
 $appHName = strtolower(str_replace(' ','_', $_ENV['APP_NAME']));
@@ -17,7 +18,7 @@ return [
     'log_errors'            => true,
     'log_error_details'     => true,
     'doctrine'              => [
-        'dev_mode'   => AppEnvironment::isProduction($appEnv),
+        'dev_mode'   => AppEnvironment::isDevelopment($appEnv),
         'cache_dir'  => STORAGE_PATH . '/cache/doctrine',
         'entity_dir' => [APP_PATH . '/Entity'],
         'connection' => [
@@ -35,5 +36,8 @@ return [
         'secure' => true,
         'httponly' => true,
         'samesite' => 'lax',
+    ],
+    'storage' => [
+        'driver' => StorageDriver::Local,
     ],
 ];

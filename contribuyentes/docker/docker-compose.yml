@@ -7,31 +7,51 @@ services:
       dockerfile: Dockerfile
       args:
         USER_ID: '${WWWUSER:-1000}'
-        GROUP_ID: '${WWWGROUP:-1000}'
-        USER: '${USER:-whoami}'
+        GROUP_ID: '${WWWGROUP:-100}'
+        USER: 'helmut'
     container_name: contribuyentes-app
     restart: always
     working_dir: /var/www/
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:
-      - ../:/var/www
+      - ../:/var/www 
+    networks:
+      - my-network
+    links:
+      - db  
+    
   nginx:
     image: nginx:1.19-alpine
     container_name: contribuyentes-nginx
     restart: always
     ports:
       - "8000:80"
-    volumes:
+    
+    volumes: 
       - ../:/var/www
       - ./nginx:/etc/nginx/conf.d
+    networks:
+      - my-network
+ 
+ 
+  
   db:
     container_name: contribuyentes-db
     image: mysql:8.0
-    volumes:
-      - ./storage/mysql:/var/lib/mysql
+  #  volumes:
+     #- ./storage/mysql:/var/lib/mysql
+   #  - mysql_data:/var/lib/mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
     ports:
       - "3306:3306"
+    networks:
+      - my-network
+
+#volumes:
+ # mysql_data:
+networks:
+  my-network:
+    driver: bridge

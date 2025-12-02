@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250828214828 extends AbstractMigration
+final class Version20251202220742 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,8 +20,8 @@ final class Version20250828214828 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE contribuyentes (id INT UNSIGNED AUTO_INCREMENT NOT NULL, user_id INT UNSIGNED DEFAULT NULL, nombres VARCHAR(255) NOT NULL, apellidos VARCHAR(255) NOT NULL, rfc VARCHAR(255) NOT NULL, curp VARCHAR(255) NOT NULL, telefono VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, regimenFiscal VARCHAR(255) NOT NULL, tipoDeclaracion VARCHAR(255) NOT NULL, impuestoObligacion VARCHAR(255) NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, INDEX IDX_8D8623C5A76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE `utf8_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE honorarios (id INT UNSIGNED AUTO_INCREMENT NOT NULL, user_id INT UNSIGNED DEFAULT NULL, contribuyente_id INT UNSIGNED DEFAULT NULL, fecha DATETIME NOT NULL, honorario NUMERIC(13, 3) NOT NULL, impuesto NUMERIC(13, 3) NOT NULL, transferencia NUMERIC(13, 3) NOT NULL, total NUMERIC(13, 3) NOT NULL, concepto VARCHAR(255) NOT NULL, observaciones VARCHAR(255) NOT NULL, tipoDeclaracion VARCHAR(255) NOT NULL, impuestoObligacion VARCHAR(255) NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, INDEX IDX_551ED163A76ED395 (user_id), INDEX IDX_551ED1639A84072B (contribuyente_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE `utf8_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE contribuyentes (id INT UNSIGNED AUTO_INCREMENT NOT NULL, user_id INT UNSIGNED DEFAULT NULL, nombres VARCHAR(255) NOT NULL, apellidos VARCHAR(255) NOT NULL, rfc VARCHAR(255) NOT NULL, curp VARCHAR(255) NOT NULL, telefono VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, regimen_fiscal VARCHAR(255) NOT NULL, tipo_declaracion VARCHAR(255) NOT NULL, impuesto_obligacion VARCHAR(255) NOT NULL, identificador VARCHAR(255) NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, INDEX IDX_8D8623C5A76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE `utf8_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE honorarios (id INT UNSIGNED AUTO_INCREMENT NOT NULL, user_id INT UNSIGNED DEFAULT NULL, contribuyente_id INT UNSIGNED DEFAULT NULL, fecha DATETIME NOT NULL, honorario NUMERIC(13, 3) NOT NULL, impuesto NUMERIC(13, 3) NOT NULL, transferencia NUMERIC(13, 3) NOT NULL, total NUMERIC(13, 3) NOT NULL, concepto VARCHAR(255) NOT NULL, observaciones VARCHAR(255) NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, INDEX IDX_551ED163A76ED395 (user_id), INDEX IDX_551ED1639A84072B (contribuyente_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE `utf8_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE recibos (id INT UNSIGNED AUTO_INCREMENT NOT NULL, honorario_id INT UNSIGNED DEFAULT NULL, fileName VARCHAR(255) NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, INDEX IDX_46247D21316A57EC (honorario_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE `utf8_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE users (id INT UNSIGNED AUTO_INCREMENT NOT NULL, nombre VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE `utf8_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE contribuyentes ADD CONSTRAINT FK_8D8623C5A76ED395 FOREIGN KEY (user_id) REFERENCES users (id)');

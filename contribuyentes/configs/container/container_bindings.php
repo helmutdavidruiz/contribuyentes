@@ -9,7 +9,7 @@ use App\Contracts\AuthInterface;
 use App\Contracts\SessionInterface;
 use App\Contracts\UserProviderServiceInterface;
 use App\Services\UserProviderService;
-
+use Doctrine\ORM\EntityManagerInterface;
 use App\Enum\AppEnvironment;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
@@ -31,8 +31,12 @@ use App\Contracts\RequestValidatorFactoryInterface;
 use App\Csrf;
 use App\Enum\SameSite;
 use App\DataObjects\SessionConfig;
+use App\Enum\StorageDriver;
 use App\RequestValidators\RequestValidatorFactory;
-
+use League\Flysystem\Filesystem;
+use Clockwork\Clockwork;
+use Clockwork\DataSource\DoctrineDataSource;
+use Clockwork\Storage\FileStorage;
 
 use function DI\create;
 
@@ -98,4 +102,19 @@ return [
   RequestValidatorFactoryInterface::class => fn(ContainerInterface $container) => $container->get(RequestValidatorFactory::class
 ),
 'csrf' => fn(ResponseFactoryInterface $responseFactory, Csrf $csrf) => new Guard($responseFactory, persistentTokenMode: true, failureHandler: $csrf->failureHandler()),
+Filesystem::class => function(Config $config){
+    // Configure and return a Filesystem instance here, for example:
+       $adapter = match($config->get('storage.driver')){
+        StorageDriver::Local => new League\Flysystem\Local\LocalFilesystemAdapter(STORAGE_PATH),
+       };
+     return new League\Flysystem\Filesystem($adapter);
+},
+  Clockwork::class                        => function (EntityManagerInterface $entityManager) {
+        $clockwork = new Clockwork();
+
+        $clockwork->storage(new FileStorage(STORAGE_PATH . '/clockwork'));
+        $clockwork->addDataSource(new DoctrineDataSource($entityManager));
+
+        return $clockwork;
+    }
 ];
