@@ -12,7 +12,12 @@ use Slim\Routing\RouteCollectorProxy;
 use App\Controllers\HonorarioController;
 
 return function (App $app) {
-    $app->get('/', [HomeController::class, 'index'])->add(AuthMiddleware::class);
+
+    $app->group('', function (RouteCollectorProxy $group) {
+       $group->get('/', [HomeController::class, 'index'])->setName('home');
+       $group->get('/stats/ytd', [HomeController::class, 'getYearToDateEstadisticas']);
+    })->add(AuthMiddleware::class);
+    #  $app->get('/', [HomeController::class, 'index'])->add(AuthMiddleware::class);
 
     $app->group('',function (RouteCollectorProxy $guest) {
       $guest->get('/login',[AuthController::class, 'loginView']);
@@ -25,7 +30,7 @@ return function (App $app) {
     $app->post('/logout',[AuthController::class, 'logOut'])->add(AuthMiddleware::class);
 
     $app->group('/contribuyentes',function (RouteCollectorProxy $contribuyentes) {
-      $contribuyentes->get('',[ContribuyenteController::class, 'index']);
+      $contribuyentes->get('',[ContribuyenteController::class, 'index'])->setName('contribuyentes');
       $contribuyentes->get('/load',[ContribuyenteController::class, 'load']);
       $contribuyentes->post('',[ContribuyenteController::class, 'store']);
       $contribuyentes->delete('/{id:[0-9]+}',[ContribuyenteController::class, 'delete']);
@@ -35,7 +40,7 @@ return function (App $app) {
     })->add(AuthMiddleware::class);
 
      $app->group('/honorarios', function (RouteCollectorProxy $transactions) {
-        $transactions->get('', [HonorarioController::class, 'index']);
+        $transactions->get('', [HonorarioController::class, 'index'])->setName('honorarios');
         $transactions->get('/load', [HonorarioController::class, 'load']);
         $transactions->post('', [HonorarioController::class, 'store']);
         $transactions->delete('/{id:[0-9]+}', [HonorarioController::class, 'delete']);

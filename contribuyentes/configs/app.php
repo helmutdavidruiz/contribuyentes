@@ -33,9 +33,10 @@ return [
     'session' => [
         'name' => $appHName . '_session',
         'flash_name' => $appHName . '_flash',
-        'secure' => true,
+        'secure' => false,
         'httponly' => true,
         'samesite' => 'lax',
+        'domain' => 'mnasociados',
     ],
     'storage' => [
         'driver' => StorageDriver::Local,

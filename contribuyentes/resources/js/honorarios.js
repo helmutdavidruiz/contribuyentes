@@ -8,7 +8,9 @@ window.addEventListener('DOMContentLoaded', function () {
     const editHonorarioModal = new Modal(document.getElementById('editHonorarioModal'))
 
     const table = new DataTable('#honorariosTable', {
-        
+        language: {
+        url: '//cdn.datatables.net/plug-ins/2.3.4/i18n/es-ES.json',
+       },
         serverSide: true,
         ajax: '/honorarios/load',
         orderMulti: false,

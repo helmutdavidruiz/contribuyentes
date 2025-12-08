@@ -7,10 +7,11 @@ use App\Contracts\UserInterface;
 use Doctrine\ORM\EntityManager;
 use App\Entity\User;
 use App\DataObjects\RegisterUserData;
+use App\Contracts\EntityManagerServiceInterface;
 
 class UserProviderService implements UserProviderServiceInterface{
 
-    public function __construct(private readonly EntityManager $entityManager){
+    public function __construct(private readonly EntityManagerServiceInterface $entityManager){
 
     }
 

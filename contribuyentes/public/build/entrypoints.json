@@ -2,47 +2,50 @@
   "entrypoints": {
     "app": {
       "js": [
-        "/build/runtime.5a2c58a3.js",
-        "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js.4a81a2f0.js",
-        "/build/app.6f4ede58.js"
+        "/build/runtime.badcef52.js",
+        "/build/138.940591d7.js",
+        "/build/app.9646e35a.js"
       ],
       "css": [
-        "/build/vendors-node_modules_datatables_net-dt_css_jquery_dataTables_css.e62f97ec.css",
-        "/build/app.5558e5b8.css"
+        "/build/app.051e8e90.css"
       ]
     },
     "dashboard": {
       "js": [
-        "/build/runtime.5a2c58a3.js",
-        "/build/dashboard.3f4a79e1.js"
+        "/build/runtime.badcef52.js",
+        "/build/346.06dc6ec3.js",
+        "/build/470.045547c7.js",
+        "/build/dashboard.f010ce97.js"
       ],
       "css": [
-        "/build/dashboard.3e794d5a.css"
+        "/build/dashboard.5ff0e6f7.css"
       ]
     },
     "contribuyentes": {
       "js": [
-        "/build/runtime.5a2c58a3.js",
-        "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js.4a81a2f0.js",
-        "/build/vendors-node_modules_core-js_modules_es_array_concat_js-node_modules_core-js_modules_es_array-f05cc0.cd9aff0c.js",
-        "/build/contribuyentes.d87625a9.js"
+        "/build/runtime.badcef52.js",
+        "/build/138.940591d7.js",
+        "/build/346.06dc6ec3.js",
+        "/build/920.09476dc8.js",
+        "/build/contribuyentes.5c8dc15c.js"
       ]
     },
     "honorarios": {
       "js": [
-        "/build/runtime.5a2c58a3.js",
-        "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js.4a81a2f0.js",
-        "/build/vendors-node_modules_core-js_modules_es_array_concat_js-node_modules_core-js_modules_es_array-f05cc0.cd9aff0c.js",
-        "/build/honorarios.84ee6c24.js"
+        "/build/runtime.badcef52.js",
+        "/build/138.940591d7.js",
+        "/build/346.06dc6ec3.js",
+        "/build/920.09476dc8.js",
+        "/build/honorarios.1fe609c6.js"
       ]
     },
     "auth": {
       "js": [
-        "/build/runtime.5a2c58a3.js",
-        "/build/auth.dd9e5f2d.js"
+        "/build/runtime.badcef52.js",
+        "/build/auth.3aa00552.js"
       ],
       "css": [
-        "/build/auth.0e96676f.css"
+        "/build/auth.31d6cfe0.css"
       ]
     }
   }

@@ -6,20 +6,45 @@ namespace App\Controllers;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use App\Services\HonorarioService;
+use App\Services\ContribuyenteService;
+use App\ResponseFormatter;
 use Slim\Views\Twig;
 
 class HomeController
 {
-    public function __construct(private readonly Twig $twig)
+    public function __construct(private readonly Twig $twig,
+                                    private readonly HonorarioService $honorarioService,
+                                    private readonly ContribuyenteService $contribuyenteService,
+                                    private readonly ResponseFormatter $responseFormatter)
     {
+        
     }
 
     public function index(Request $request, Response $response): Response
+     {
+        $startDate             = \DateTime::createFromFormat('Y-m-d', date('Y-m-01'));
+        $endDate               = new \DateTime('now');
+        $totals                = $this->honorarioService->getTotals($startDate, $endDate);
+        $recentHonorarios    = $this->honorarioService->getRecentHonorarios(10);
+        $topSpendingContribuyentes = $this->contribuyenteService->getTopSpendingContribuyentes(4);
+
+        return $this->twig->render(
+            $response,
+            'dashboard.twig',
+            [
+                'totals'                => $totals,
+                'honorarios'            => $recentHonorarios,
+                'topSpendingContribuyentes' => $topSpendingContribuyentes,
+            ]
+        );
+    }
+
+      public function getYearToDateEstadisticas(Response $response): Response
     {
-    
-        $user = $request->getAttribute('user');
-      
+        $data = $this->honorarioService->getMonthlySummary((int) date('Y'));
+
      
-        return $this->twig->render($response, 'dashboard.twig');
+        return $this->responseFormatter->asJson($response, $data);
     }
 }

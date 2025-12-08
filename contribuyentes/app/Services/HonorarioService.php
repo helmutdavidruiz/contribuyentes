@@ -8,12 +8,14 @@ use App\DataObjects\DataTableQueryParams;
 use App\DataObjects\HonorarioData;
 use App\Entity\Honorario;
 use App\Entity\User;
-use Doctrine\ORM\EntityManager;
+use App\Contracts\EntityManagerServiceInterface;
+
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use PhpParser\Node\Expr\Print_;
 
 class HonorarioService
 {
-    public function __construct(private readonly EntityManager $entityManager)
+    public function __construct(private readonly EntityManagerServiceInterface $entityManager)
     {
     }
 
@@ -88,5 +90,52 @@ class HonorarioService
         $this->entityManager->flush();
 
         return $honorario;
+    }
+
+        public function getRecentHonorarios(int $limit): array
+    {
+        return $this->entityManager
+            ->getRepository(Honorario::class)
+            ->createQueryBuilder('t')
+            ->select('t', 'c')
+            ->leftJoin('t.contribuyente', 'c')
+            ->orderBy('t.fecha', 'desc')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getArrayResult();
+    }
+
+     public function getTotals(\DateTime $startDate, \DateTime $endDate): array
+    {
+        $query = $this->entityManager->createQuery(
+            'SELECT SUM(t.total) AS net, 
+                    SUM(CASE WHEN t.total > 0 THEN t.total ELSE 0 END) AS income,
+                    SUM(CASE WHEN t.total < 0 THEN ABS(t.total) ELSE 0 END) as expense
+             FROM App\Entity\Honorario t
+             WHERE t.fecha BETWEEN :start AND :end'
+        );
+
+        $query->setParameter('start', $startDate->format('Y-m-d 00:00:00'));
+        $query->setParameter('end', $endDate->format('Y-m-d 23:59:59'));
+
+        return $query->getSingleResult();
+    }
+
+     public function getMonthlySummary(int $year): array
+    {
+        $query = $this->entityManager->createQuery(
+            'SELECT SUM(CASE WHEN t.total > 0 THEN t.total ELSE 0 END) as income,
+                    SUM(CASE WHEN t.total < 0 THEN abs(t.total) ELSE 0 END) as expense, 
+                    MONTH(t.fecha) as m
+             FROM App\Entity\Honorario t 
+             WHERE YEAR(t.fecha) = :year 
+             GROUP BY m 
+             ORDER BY m ASC'
+        );
+
+        $query->setParameter('year', $year);
+
+        echo($query->getSQL());
+        return $query->getArrayResult();
     }
 }

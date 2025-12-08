@@ -5,7 +5,7 @@ namespace App\Services;
 
 use App\DataObjects\ContribuyenteData;
 use App\Entity\Contribuyente;
-use Doctrine\ORM\EntityManager;
+use App\Contracts\EntityManagerServiceInterface;
 use App\Entity\User;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use App\DataObjects\DataTableQueryParams;
@@ -13,7 +13,7 @@ use App\DataObjects\DataTableQueryParams;
  class ContribuyenteService{
 
 
-    public function __construct(private readonly EntityManager $entityManager){
+    public function __construct(private readonly EntityManagerServiceInterface $entityManager){
 
     }
     public function crear(ContribuyenteData $data , User $user): Contribuyente{
@@ -138,5 +138,22 @@ use App\DataObjects\DataTableQueryParams;
             ->select('c.id', 'c.identificador')
             ->getQuery()
             ->getArrayResult();
+    }
+
+     public function getTopSpendingContribuyentes(int $limit): array
+    {
+        $query = $this->entityManager->createQuery(
+            'SELECT c.nombres, SUM(ABS(t.total)) as total
+             FROM App\Entity\Honorario t
+             JOIN t.contribuyente c
+             WHERE t.total > 0
+             GROUP BY c.id
+             ORDER BY total DESC'
+        );
+
+        
+        $query->setMaxResults($limit);
+
+        return $query->getArrayResult();
     }
 }
