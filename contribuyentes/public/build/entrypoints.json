@@ -2,47 +2,47 @@
   "entrypoints": {
     "app": {
       "js": [
-        "/build/runtime.badcef52.js",
-        "/build/138.940591d7.js",
-        "/build/app.9646e35a.js"
+        "/build/runtime.98656f55.js",
+        "/build/336.9515e8f1.js",
+        "/build/app.24fad415.js"
       ],
       "css": [
-        "/build/app.051e8e90.css"
+        "/build/app.a595ae7f.css"
       ]
     },
     "dashboard": {
       "js": [
-        "/build/runtime.badcef52.js",
-        "/build/346.06dc6ec3.js",
-        "/build/470.045547c7.js",
-        "/build/dashboard.f010ce97.js"
+        "/build/runtime.98656f55.js",
+        "/build/208.dd76f9f2.js",
+        "/build/847.fb374a20.js",
+        "/build/dashboard.80c86f13.js"
       ],
       "css": [
-        "/build/dashboard.5ff0e6f7.css"
+        "/build/dashboard.670410ac.css"
       ]
     },
     "contribuyentes": {
       "js": [
-        "/build/runtime.badcef52.js",
-        "/build/138.940591d7.js",
-        "/build/346.06dc6ec3.js",
-        "/build/920.09476dc8.js",
-        "/build/contribuyentes.5c8dc15c.js"
+        "/build/runtime.98656f55.js",
+        "/build/336.9515e8f1.js",
+        "/build/208.dd76f9f2.js",
+        "/build/314.44dba36f.js",
+        "/build/contribuyentes.6d706bde.js"
       ]
     },
     "honorarios": {
       "js": [
-        "/build/runtime.badcef52.js",
-        "/build/138.940591d7.js",
-        "/build/346.06dc6ec3.js",
-        "/build/920.09476dc8.js",
-        "/build/honorarios.1fe609c6.js"
+        "/build/runtime.98656f55.js",
+        "/build/336.9515e8f1.js",
+        "/build/208.dd76f9f2.js",
+        "/build/314.44dba36f.js",
+        "/build/honorarios.2e19293b.js"
       ]
     },
     "auth": {
       "js": [
-        "/build/runtime.badcef52.js",
-        "/build/auth.3aa00552.js"
+        "/build/runtime.98656f55.js",
+        "/build/auth.0a2f629d.js"
       ],
       "css": [
         "/build/auth.31d6cfe0.css"

@@ -15,7 +15,7 @@ class ResponseFormatter{
 
           $response= $response->withHeader('Content-Type','application/json');
 
-                $response->getBody()->write(json_encode($data));
+                $response->getBody()->write(json_encode($data,$flags));
                 return $response;
     }
 

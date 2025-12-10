@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y procps \
     sudo \
     wget 
 
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash \
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash \
     && apt-get install nodejs -y
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

@@ -21,23 +21,30 @@
                 </div>
                 <div class="row justify-content-between text-center">
                     <div class="col p-4 pb-0 fs-2">
-                        <div>Pendientes</div>
-                        <div class="fw-bold text-danger">${{ totals.expense | number_format(2) }}</span></div>
+                        <div>Impuestos</div>
+                        <div class="fw-bold {{ totales.impuestos != 0 ? 'text-success' : 'text-danger' }}">
+                           ${{ totales.impuestos | number_format(2) }}</span></div>
                     </div>
                     <div class="col p-4 pb-0 fs-2">
-                        <div>Ingreso</div>
-                        <div class="fw-bold text-success">${{ totals.income | number_format(2) }}</div>
+                        <div>Honorarios</div>
+                        <div class="fw-bold {{ totales.honorarios != 0 ? 'text-success' : 'text-danger' }}">
+                          ${{ totales.honorarios | number_format(2) }}</div>
+                    </div>
+                    <div class="col p-4 pb-0 fs-2">
+                        <div>Transferencias</div>
+                        <div class="fw-bold {{ totales.transferencias != 0 ? 'text-success' : 'text-danger' }}">
+                          ${{ totales.transferencias | number_format(2) }}</div>
                     </div>
                     <div class="col p-4 pb-0 fs-2">
                         <div>Neto Total</div>
-                        <div class="fw-bold {{ totals.net >= 0 ? 'text-success' : 'text-danger' }}">
-                            ${{ totals.net | number_format(2) }}
+                        <div class="fw-bold {{ totales.net >= 0 ? 'text-success' : 'text-danger' }}">
+                            ${{ totales.net | number_format(2) }}
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col p-4">
-                        <div class="fs-1 text-center mb-2">{{ "now" | date('Y') }} Resumen</div>
+                        <!--div class="fs-1 text-center mb-2">{{ "now" | date('Y') }} Resumen</div-->
                         <canvas id="yearToDateChart"></canvas>
                     </div>
                 </div>
@@ -62,13 +69,13 @@
                 </table>
             </div>
         </div>
-        <div class="categories-container row">
-            {% for spendingContribuyente in topSpendingContribuyentes %}
+        <div class="contribuyentes-container row">
+            {% for topContribuyente in topContribuyentesMayorImpuestos %}
                 <div class="col">
-                    <div class="category-card p-4 text-center d-flex align-items-center justify-content-center">
+                    <div class="contribuyente-card p-4 text-center d-flex align-items-center justify-content-center">
                         <div>
-                            <h6 class="fs-6 fw-normal">{{ spendingContribuyente.nombres }}</h6>
-                            <h1 class="fs-1 text-danger text-opacity-75">${{ spendingContribuyente.total }}</h1>
+                            <h6 class="fs-6 fw-normal">{{ topContribuyente.nombres }}</h6>
+                            <h1 class="fs-1 text-success text-opacity-75">${{ topContribuyente.total | number_format(2) }}</h1>
                         </div>
                     </div>
                 </div>

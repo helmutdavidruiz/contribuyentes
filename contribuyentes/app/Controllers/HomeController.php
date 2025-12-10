@@ -26,24 +26,23 @@ class HomeController
         $startDate             = \DateTime::createFromFormat('Y-m-d', date('Y-m-01'));
         $endDate               = new \DateTime('now');
         $totals                = $this->honorarioService->getTotals($startDate, $endDate);
-        $recentHonorarios    = $this->honorarioService->getRecentHonorarios(10);
-        $topSpendingContribuyentes = $this->contribuyenteService->getTopSpendingContribuyentes(4);
+        $recentHonorarios    = $this->honorarioService->getHonorariosRecientes(10);
+        $topContribuyentesMayorImpuestos = $this->contribuyenteService->getTopContribuyentesMayorImpuestos(4);
 
         return $this->twig->render(
             $response,
             'dashboard.twig',
             [
-                'totals'                => $totals,
+                'totales'                => $totals,
                 'honorarios'            => $recentHonorarios,
-                'topSpendingContribuyentes' => $topSpendingContribuyentes,
+                'topContribuyentesMayorImpuestos' => $topContribuyentesMayorImpuestos,
             ]
         );
     }
 
-      public function getYearToDateEstadisticas(Response $response): Response
+      public function getEstadisticasDelAnioHastaFecha(Response $response): Response
     {
-        $data = $this->honorarioService->getMonthlySummary((int) date('Y'));
-
+        $data = $this->honorarioService->getResumenMensual((int) date('Y'));
      
         return $this->responseFormatter->asJson($response, $data);
     }

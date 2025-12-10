@@ -3,36 +3,45 @@ import Chart   from 'chart.js/auto'
 import { get } from './ajax'
 
 window.addEventListener('DOMContentLoaded', function () {
-    const ctx = document.getElementById('yearToDateChart')
+    const contexto = document.getElementById('yearToDateChart')
 
     get('/stats/ytd').then(response => response.json()).then(response => {
-        let expensesData = Array(12).fill(null)
-        let incomeData   = Array(12).fill(null)
+        let honorariosData = Array(12).fill(null)
+        let impuestosData   = Array(12).fill(null)
+        let transferenciasData   = Array(12).fill(null)
 
-        log(expensesData)
-        response.forEach(({m, expense, income}) => {
-            expensesData[m - 1] = expense
-            incomeData[m - 1]   = income
+        
+        response.forEach(({m, impuestos, honorarios, transferencias}) => {
+            impuestosData[m - 1] = impuestos
+            honorariosData[m - 1]   = honorarios
+            transferenciasData[m - 1]   = transferencias
         })
 
-        new Chart(ctx, {
+        new Chart(contexto, {
             type: 'bar',
             data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Dec'],
+                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov','Dic'],
                 datasets: [
                     {
-                        label: 'Expense',
-                        data: expensesData,
+                        label: 'Impuestos',
+                        data: impuestosData,
                         borderWidth: 1,
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: 'rgba(228, 17, 17, 0.13)',
+                        borderColor: 'rgba(6, 20, 2, 1)',
                     },
                     {
-                        label: 'Income',
-                        data: incomeData,
+                        label: 'Honorarios',
+                        data: honorariosData,
                         borderWidth: 1,
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(11, 109, 19, 0.46)',
+                        borderColor: 'rgba(13, 24, 24, 1)',
+                    },
+                    {
+                        label: 'Transferencias',
+                        data: transferenciasData,
+                        borderWidth: 1,
+                        backgroundColor: 'rgba(171, 184, 33, 0.16)',
+                        borderColor: 'rgba(12, 26, 26, 1)',
                     }
                 ]
             },

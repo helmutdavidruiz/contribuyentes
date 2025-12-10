@@ -92,7 +92,7 @@ class HonorarioService
         return $honorario;
     }
 
-        public function getRecentHonorarios(int $limit): array
+        public function getHonorariosRecientes(int $limit): array
     {
         return $this->entityManager
             ->getRepository(Honorario::class)
@@ -109,8 +109,9 @@ class HonorarioService
     {
         $query = $this->entityManager->createQuery(
             'SELECT SUM(t.total) AS net, 
-                    SUM(CASE WHEN t.total > 0 THEN t.total ELSE 0 END) AS income,
-                    SUM(CASE WHEN t.total < 0 THEN ABS(t.total) ELSE 0 END) as expense
+                    SUM(CASE WHEN t.impuesto > 0 THEN t.impuesto ELSE 0 END) AS impuestos,
+                    SUM(CASE WHEN t.honorario > 0 THEN t.honorario ELSE 0 END) as honorarios,
+                    SUM(CASE WHEN t.transferencia > 0 THEN t.transferencia ELSE 0 END) as transferencias
              FROM App\Entity\Honorario t
              WHERE t.fecha BETWEEN :start AND :end'
         );
@@ -121,11 +122,12 @@ class HonorarioService
         return $query->getSingleResult();
     }
 
-     public function getMonthlySummary(int $year): array
+     public function getResumenMensual(int $year): array
     {
         $query = $this->entityManager->createQuery(
-            'SELECT SUM(CASE WHEN t.total > 0 THEN t.total ELSE 0 END) as income,
-                    SUM(CASE WHEN t.total < 0 THEN abs(t.total) ELSE 0 END) as expense, 
+            'SELECT SUM(CASE WHEN t.impuesto > 0 THEN t.impuesto ELSE 0 END) as impuestos,
+                    SUM(CASE WHEN t.honorario > 0 THEN t.honorario ELSE 0 END) as honorarios,
+                    SUM(CASE WHEN t.transferencia > 0 THEN t.transferencia ELSE 0 END) as transferencias, 
                     MONTH(t.fecha) as m
              FROM App\Entity\Honorario t 
              WHERE YEAR(t.fecha) = :year 
@@ -135,7 +137,6 @@ class HonorarioService
 
         $query->setParameter('year', $year);
 
-        echo($query->getSQL());
         return $query->getArrayResult();
     }
 }

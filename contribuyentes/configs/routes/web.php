@@ -15,7 +15,7 @@ return function (App $app) {
 
     $app->group('', function (RouteCollectorProxy $group) {
        $group->get('/', [HomeController::class, 'index'])->setName('home');
-       $group->get('/stats/ytd', [HomeController::class, 'getYearToDateEstadisticas']);
+       $group->get('/stats/ytd', [HomeController::class, 'getEstadisticasDelAnioHastaFecha']);
     })->add(AuthMiddleware::class);
     #  $app->get('/', [HomeController::class, 'index'])->add(AuthMiddleware::class);
 

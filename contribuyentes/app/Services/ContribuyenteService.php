@@ -140,7 +140,7 @@ use App\DataObjects\DataTableQueryParams;
             ->getArrayResult();
     }
 
-     public function getTopSpendingContribuyentes(int $limit): array
+     public function getTopContribuyentesMayorImpuestos(int $limit): array
     {
         $query = $this->entityManager->createQuery(
             'SELECT c.nombres, SUM(ABS(t.total)) as total
