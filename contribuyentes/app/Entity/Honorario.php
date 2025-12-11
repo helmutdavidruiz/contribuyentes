@@ -26,6 +26,10 @@ class Honorario{
      #[Id, Column(options: ['unsigned' => true]), GeneratedValue]
     private int $id;
 
+    #[Column(name: 'fue_revisado', options: ['default' => 0])]
+    private bool $fueRevisado;
+
+
     #[Column]
     private DateTime $fecha;
 
@@ -64,6 +68,7 @@ class Honorario{
     public function __construct(){
 
         $this->recibos = new ArrayCollection();
+        $this->fueRevisado = false;
     }
 
      public function getId(): int
@@ -223,6 +228,18 @@ class Honorario{
     public function addRecibo(Recibo $recibo): Honorario
     {
         $this->recibos->add($recibo);
+
+        return $this;
+    }
+
+     public function fueRevisado(): bool
+    {
+        return $this->fueRevisado;
+    }
+
+    public function setRevisado(bool $fueRevisado): Honorario
+    {
+        $this->fueRevisado = $fueRevisado;
 
         return $this;
     }

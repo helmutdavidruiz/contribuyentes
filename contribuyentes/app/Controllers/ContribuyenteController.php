@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 namespace App\Controllers;
+use App\Contracts\EntityManagerServiceInterface;
+
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use App\Contracts\RequestValidatorFactoryInterface;
@@ -18,7 +20,8 @@ class ContribuyenteController{
                                 private readonly RequestValidatorFactoryInterface $requestValidatorFactory,
                                 private readonly ContribuyenteService $contribuyenteService,
                                 private readonly ResponseFormatter $responseFormatter,
-                                private readonly RequestService $requestService)
+                                private readonly RequestService $requestService,
+                                private readonly EntityManagerServiceInterface $entityManagerService)
                               { }
 
 
@@ -36,20 +39,22 @@ class ContribuyenteController{
 
         $data=$this->requestValidatorFactory->make(CreateContribuyenteRequestValidator::class)->validate($request->getParsedBody());
         
-        var_dump($data);
+        #var_dump($data);
        
-        $this->contribuyenteService->crear(new ContribuyenteData($data['nombres'],$data['apellidos'],$data['rfc'],$data['curp'],$data['telefono'],$data['email'],$data['regimenFiscal'],$data['tipoDeclaracion'],$data['impuestoObligacion']), $request->getAttribute('user'));
+        $contribuyente = $this->contribuyenteService->crear(new ContribuyenteData($data['nombres'],$data['apellidos'],$data['rfc'],$data['curp'],$data['telefono'],$data['email'],$data['regimenFiscal'],$data['tipoDeclaracion'],$data['impuestoObligacion']), $request->getAttribute('user'));
         
-       
+        $this ->entityManagerService->sync($contribuyente);
 
         return $response->withHeader('Location','/contribuyentes')->withStatus(302);
     }
 
     public function delete(Request $request, Response $response, array $args): Response{
       
-        
+        $contribuyente = $this->contribuyenteService->getById((int) $args['id']);
+
+        $this->entityManagerService->delete($contribuyente, true);
        
-        $this->contribuyenteService->delete((int) $args['id']);
+        #$this->contribuyenteService->delete((int) $args['id']);
         return $response;
 
     }
@@ -88,14 +93,14 @@ class ContribuyenteController{
 
         $contribuyente = $this->contribuyenteService->getById((int) $args['id']);
 
-     
+       
 
         if (! $contribuyente) {
             return $response->withStatus(404);
         }
 
-     
-        $this->contribuyenteService->actualizar($contribuyente,new ContribuyenteData($data['nombres'],$data['apellidos'],$data['rfc'],$data['curp'],$data['telefono'],$data['email'],$data['regimenFiscal'],$data['tipoDeclaracion'],$data['impuestoObligacion']));
+        
+        $this->entityManagerService->sync($this->contribuyenteService->actualizar($contribuyente,new ContribuyenteData($data['nombres'],$data['apellidos'],$data['rfc'],$data['curp'],$data['telefono'],$data['email'],$data['regimenFiscal'],$data['tipoDeclaracion'],$data['impuestoObligacion'])));
         return   $response;
         
     } 

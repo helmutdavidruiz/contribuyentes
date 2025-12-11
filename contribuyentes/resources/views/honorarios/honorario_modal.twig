@@ -51,6 +51,7 @@
                            class="form-control form-control-lg"
                            placeholder="Observaciones" />
                 </div>
+                  {% if  modal.id == 'newHonorarioModal' %}
                 <div class="form-outline form-white mb-4">
                     <select class="form-select form-select-lg" aria-label="Contribuyente" name="contribuyente">
                         <option value="">Selecciona Contribuyente</option>
@@ -59,6 +60,17 @@
                         {% endfor %}
                     </select>
                 </div>
+                 {% else %}
+                 <div class="form-outline form-white mb-4">
+                    <select class="form-select form-select-lg" aria-label="Contribuyente" name="contribuyente" disabled>
+                        <option value="">Selecciona Contribuyente</option>
+                        {% for contribuyente in contribuyentes %}
+                            <option value="{{ contribuyente.id }}">{{ contribuyente.identificador }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                  {% endif %}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">

@@ -44,7 +44,7 @@
                 </div>
                 <div class="row">
                     <div class="col p-4">
-                        <!--div class="fs-1 text-center mb-2">{{ "now" | date('Y') }} Resumen</div-->
+                        <div class="fs-1 text-center mb-2">{{ "now" | date('Y') }} Resumen</div>
                         <canvas id="yearToDateChart"></canvas>
                     </div>
                 </div>
@@ -60,7 +60,7 @@
                                     {{ honorario.total < 0 ? '-' : '' }}${{ honorario.total | abs | number_format(2) }}
                                 </td>
                                 <td>
-                                    <div>{{ honorario.contribuyente ? honorario.contribuyente.nombres: 'N/A' }}</div>
+                                    <div>{{ honorario.contribuyente ? honorario.contribuyente.identificador: 'N/A' }}</div>
                                     <div>{{ honorario.fecha | date('m/d/Y') }}</div>
                                 </td>
                             </tr>
@@ -74,7 +74,7 @@
                 <div class="col">
                     <div class="contribuyente-card p-4 text-center d-flex align-items-center justify-content-center">
                         <div>
-                            <h6 class="fs-6 fw-normal">{{ topContribuyente.nombres }}</h6>
+                            <h6 class="fs-6 fw-normal">{{ topContribuyente.identificador }}</h6>
                             <h1 class="fs-1 text-success text-opacity-75">${{ topContribuyente.total | number_format(2) }}</h1>
                         </div>
                     </div>

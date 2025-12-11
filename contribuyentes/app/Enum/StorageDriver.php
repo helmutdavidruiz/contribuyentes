@@ -4,4 +4,5 @@ namespace App\Enum;
 enum StorageDriver{
 
     case Local;
+    case Remote_DO;
 }

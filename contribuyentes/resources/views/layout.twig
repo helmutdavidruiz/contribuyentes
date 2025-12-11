@@ -25,9 +25,9 @@
                     <span class="fs-1 fw-bold">M&N<span class="text-primary">Asociados</span></span>
                 </a>
                 <ul class="nav nav-pills align-items-center">
-                    <li class="nav-item"><a href="/" class="nav-link fw-bold fs-5 active" aria-current="page">Resumen</a></li>
-                    <li class="nav-item"><a href="/honorarios" class="nav-link fw-bold fs-5" aria-current="page">Honorarios</a></li>
-                    <li class="nav-item"><a href="/contribuyentes" class="nav-link fw-bold fs-5" aria-current="page">Contribuyentes</a></li>
+                    <li class="nav-item"><a href="/" class="nav-link fw-bold fs-5 {{ current_route == 'home' ? 'active' : '' }}" aria-current="page">Resumen</a></li>
+                    <li class="nav-item"><a href="/honorarios" class="nav-link fw-bold fs-5 {{ current_route == 'honorarios' ? 'active' : '' }}" aria-current="page">Honorarios</a></li>
+                    <li class="nav-item"><a href="/contribuyentes" class="nav-link fw-bold fs-5 {{ current_route == 'contribuyentes' ? 'active' : '' }}" aria-current="page">Contribuyentes</a></li>
                 </ul>
                 <div class="dropdown user-dropdown-menu">
                     <a href="#" class="h5 text-decoration-none" id="userDropDownMenu" data-bs-toggle="dropdown"
@@ -40,10 +40,13 @@
                         <span>{{ auth.name }}</span>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="userDropDownMenu">
+                        <!--li>
+                            <a href="/profile" class="dropdown-item">Perfil</a>
+                        </li-->
                         <li>
                             <form action="/logout" method="post">
                                 {{ csrf.fields | raw }}
-                                <button class="dropdown-item" href="#">Log Out</button>
+                                <button class="dropdown-item">Log Out</button>
                             </form>
                         </li>
                     </ul>

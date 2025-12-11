@@ -22,11 +22,27 @@ use App\DataObjects\DataTableQueryParams;
 
 
         $contribuyente->setUser($user);
-        return $this->actualizar($contribuyente,$data);
+        return $this->store($contribuyente,$data);
 
     }
 
 
+
+     public function store(Contribuyente $contribuyente, ContribuyenteData $data): Contribuyente
+    {
+        $contribuyente->setNombres($data->nombres);
+        $contribuyente->setApellidos($data->apellidos);
+        $contribuyente->setRfc($data->rfc);
+        $contribuyente->setCurp($data->curp);
+        $contribuyente->setTelefono($data->telefono);
+        $contribuyente->setEmail($data->email);
+        $contribuyente->setRegimenFiscal($data->regimenFiscal);
+        $contribuyente->setTipoDeclaracion($data->tipoDeclaracion);
+        $contribuyente->setImpuestoObligacion($data->impuestoObligacion);
+        $contribuyente->setIdentificador(str_pad((string)$this->getCount(),4,'0',STR_PAD_LEFT).str_pad(substr($this->getCaracteres($data->nombres).$this->getCaracteres($data->apellidos),0,4),4,'X'));
+
+        return $contribuyente;
+    }
       public function actualizar(Contribuyente $contribuyente, ContribuyenteData $data): Contribuyente
     {
         $contribuyente->setNombres($data->nombres);
@@ -38,10 +54,7 @@ use App\DataObjects\DataTableQueryParams;
         $contribuyente->setRegimenFiscal($data->regimenFiscal);
         $contribuyente->setTipoDeclaracion($data->tipoDeclaracion);
         $contribuyente->setImpuestoObligacion($data->impuestoObligacion);
-        $contribuyente->setIdentificador((string)$this->getCount().'-'.$this->getCaracteres($data->nombres).$this->getCaracteres($data->apellidos));
-
-        $this->entityManager->persist($contribuyente);
-        $this->entityManager->flush();
+       # $contribuyente->setIdentificador(str_pad($contribuyente->getId().$this->getCaracteres($data->nombres).$this->getCaracteres($data->apellidos),5,'0'));
         
         return $contribuyente;
     }
@@ -83,14 +96,6 @@ use App\DataObjects\DataTableQueryParams;
     }
 
 
-     public function delete(int $id):void{
-
-      $contribuyente= $this->entityManager->find(Contribuyente::class,$id);
-
-      $this->entityManager->remove($contribuyente);
-      $this->entityManager->flush();
-
-    }
 
      public function getById(int $id): ?Contribuyente
     {
@@ -143,7 +148,7 @@ use App\DataObjects\DataTableQueryParams;
      public function getTopContribuyentesMayorImpuestos(int $limit): array
     {
         $query = $this->entityManager->createQuery(
-            'SELECT c.nombres, SUM(ABS(t.total)) as total
+            'SELECT c.identificador, SUM(ABS(t.total)) as total
              FROM App\Entity\Honorario t
              JOIN t.contribuyente c
              WHERE t.total > 0

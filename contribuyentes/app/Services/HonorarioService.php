@@ -25,7 +25,7 @@ class HonorarioService
 
         $honorario->setUser($user);
 
-        return $this->update($honorario, $honorarioData);
+        return $this->store($honorario, $honorarioData);
     }
 
     public function getPaginatedHonorarios(DataTableQueryParams $params): Paginator
@@ -61,13 +61,6 @@ class HonorarioService
         return new Paginator($query);
     }
 
-    public function delete(int $id): void
-    {
-        $honorario = $this->entityManager->find(Honorario::class, $id);
-
-        $this->entityManager->remove($honorario);
-        $this->entityManager->flush();
-    }
 
     public function getById(int $id): ?Honorario
     {
@@ -84,12 +77,29 @@ class HonorarioService
         $honorario->setTotal($total);
         $honorario->setConcepto($honorarioData->concepto);
         $honorario->setObservaciones($honorarioData->observaciones);
-        $honorario->setContribuyente($honorarioData->contribuyente);
-
-        $this->entityManager->persist($honorario);
-        $this->entityManager->flush();
+        #$honorario->setContribuyente($honorarioData->contribuyente);
 
         return $honorario;
+    }
+
+      public function store(Honorario $honorario, HonorarioData $honorarioData): Honorario
+    {
+        $honorario->setFecha($honorarioData->fecha);
+        $honorario->setHonorario($honorarioData->honorario);
+        $honorario->setImpuesto($honorarioData->impuesto);
+        $honorario->setTransferencia($honorarioData->transferencia);
+        $total = $honorarioData->honorario+$honorarioData->impuesto+$honorarioData->transferencia;
+        $honorario->setTotal($total);
+        $honorario->setConcepto($honorarioData->concepto);
+        $honorario->setObservaciones($honorarioData->observaciones);
+        $honorario->setContribuyente($honorarioData->contribuyente);
+
+        return $honorario;
+    }
+
+    public function alternarRevisado(Honorario $honorario): void
+    {
+        $honorario->setRevisado(! $honorario->fueRevisado());
     }
 
         public function getHonorariosRecientes(int $limit): array
@@ -139,4 +149,6 @@ class HonorarioService
 
         return $query->getArrayResult();
     }
+
+
 }

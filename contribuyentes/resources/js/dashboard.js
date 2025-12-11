@@ -26,21 +26,21 @@ window.addEventListener('DOMContentLoaded', function () {
                         label: 'Impuestos',
                         data: impuestosData,
                         borderWidth: 1,
-                        backgroundColor: 'rgba(228, 17, 17, 0.13)',
+                        backgroundColor: 'rgba(205, 11, 11, 0.32)',
                         borderColor: 'rgba(6, 20, 2, 1)',
                     },
                     {
                         label: 'Honorarios',
                         data: honorariosData,
                         borderWidth: 1,
-                        backgroundColor: 'rgba(11, 109, 19, 0.46)',
+                        backgroundColor: 'rgba(14, 225, 31, 0.46)',
                         borderColor: 'rgba(13, 24, 24, 1)',
                     },
                     {
                         label: 'Transferencias',
                         data: transferenciasData,
                         borderWidth: 1,
-                        backgroundColor: 'rgba(171, 184, 33, 0.16)',
+                        backgroundColor: 'rgba(221, 240, 15, 0.91)',
                         borderColor: 'rgba(12, 26, 26, 1)',
                     }
                 ]

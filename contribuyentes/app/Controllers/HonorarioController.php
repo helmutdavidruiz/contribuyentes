@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace App\Controllers;
 
+use App\Contracts\EntityManagerServiceInterface;
 use App\Contracts\RequestValidatorFactoryInterface;
 use App\DataObjects\HonorarioData;
 use App\Entity\Honorario;
@@ -25,7 +26,8 @@ class HonorarioController
         private readonly HonorarioService $honorarioService,
         private readonly ResponseFormatter $responseFormatter,
         private readonly RequestService $requestService,
-        private readonly ContribuyenteService $contribuyenteService
+        private readonly ContribuyenteService $contribuyenteService,
+        private readonly EntityManagerServiceInterface $entityManagerService
     ) {
     }
 
@@ -44,7 +46,7 @@ class HonorarioController
             $request->getParsedBody()
         );
 
-        $this->honorarioService->create(
+        $honorario=$this->honorarioService->create(
             new HonorarioData(
                 new DateTime($data['fecha']),
                 (float) $data['honorario'],
@@ -57,15 +59,19 @@ class HonorarioController
             $request->getAttribute('user')
         );
 
+         $this->entityManagerService->sync($honorario);
+
         return $response;
     }
 
-    public function delete(Request $request, Response $response, array $args): Response
+   public function delete(Request $request, Response $response, array $args): Response
     {
-        $this->honorarioService->delete((int) $args['id']);
+        $honorario= $this->honorarioService->getById((int) $args['id']);
+
+        $this->entityManagerService->delete($honorario, true);
 
         return $response;
-    }
+    } 
 
     public function get(Request $request, Response $response, array $args): Response
     {
@@ -102,6 +108,7 @@ class HonorarioController
             return $response->withStatus(404);
         }
 
+         $this->entityManagerService->sync(
         $this->honorarioService->update(
             $honorario,
             new HonorarioData(
@@ -113,6 +120,7 @@ class HonorarioController
                 $data['observaciones'],
                 $data['contribuyente']
             )
+          )
         );
 
         return $response;
@@ -144,5 +152,19 @@ class HonorarioController
             $params->draw,
             $totalHonorarios
         );
+    }
+
+     public function alternarRevisado(Request $request, Response $response, array $args): Response
+    {
+        $id = (int) $args['id'];
+
+        if (! $id || ! ($honorario = $this->honorarioService->getById($id))) {
+            return $response->withStatus(404);
+        }
+
+        $this->honorarioService->alternarRevisado($honorario);
+        $this->entityManagerService->sync();
+
+        return $response;
     }
 }
