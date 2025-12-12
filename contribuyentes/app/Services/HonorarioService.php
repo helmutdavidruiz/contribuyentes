@@ -48,6 +48,8 @@ class HonorarioService
                   ->orWhere('t.honorario LIKE :honorario')->setParameter('honorario', '%' . addcslashes($params->searchTerm, '%_') . '%')
                   ->orWhere('t.impuesto LIKE :impuesto')->setParameter('impuesto', '%' . addcslashes($params->searchTerm, '%_') . '%')
                   ->orWhere('t.transferencia LIKE :transferencia')->setParameter('transferencia', '%' . addcslashes($params->searchTerm, '%_') . '%')
+                  ->orWhere('t.total LIKE :total')->setParameter('total', '%' . addcslashes($params->searchTerm, '%_') . '%')
+                  ->orWhere('t.fecha LIKE :fecha')->setParameter('fecha', '%' . addcslashes($params->searchTerm, '%_') . '%')
                   ->orWhere('c.identificador LIKE :identificador')->setParameter('identificador', '%' . addcslashes($params->searchTerm, '%_') . '%');
 
         }
@@ -150,5 +152,6 @@ class HonorarioService
         return $query->getArrayResult();
     }
 
+   
 
 }

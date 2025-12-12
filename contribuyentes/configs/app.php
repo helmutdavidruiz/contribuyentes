@@ -41,4 +41,5 @@ return [
     'storage' => [
         'driver' => StorageDriver::Local,
     ],
+    'trusted_proxies'       => [],
 ];

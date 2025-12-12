@@ -15,7 +15,7 @@
         "/build/runtime.98656f55.js",
         "/build/208.dd76f9f2.js",
         "/build/847.fb374a20.js",
-        "/build/dashboard.94d94592.js"
+        "/build/dashboard.11bac700.js"
       ],
       "css": [
         "/build/dashboard.670410ac.css"
@@ -27,7 +27,7 @@
         "/build/336.9515e8f1.js",
         "/build/208.dd76f9f2.js",
         "/build/314.44dba36f.js",
-        "/build/contribuyentes.6d706bde.js"
+        "/build/contribuyentes.c39e4fcc.js"
       ]
     },
     "honorarios": {
@@ -36,7 +36,7 @@
         "/build/336.9515e8f1.js",
         "/build/208.dd76f9f2.js",
         "/build/314.44dba36f.js",
-        "/build/honorarios.2e19293b.js"
+        "/build/honorarios.2b3b3350.js"
       ]
     },
     "auth": {

@@ -11,11 +11,15 @@ enum AppEnvironment: string
 
     public static function isProduction(string $appEnvironment): bool
     {
+        
         return self::tryFrom($appEnvironment) === self::Production;
     }
 
     public static function isDevelopment(string $appEnvironment): bool
     {
+        
+       # var_dump(self::tryFrom($appEnvironment) === self::Development);
+
         return self::tryFrom($appEnvironment) === self::Development;
     }
 }

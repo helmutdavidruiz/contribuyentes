@@ -14,8 +14,8 @@ class UpdateContribuyenteRequestValidator implements RequestValidatorInterface{
     function validate( array $data): array{
 
          $v = new Validator($data);
-        $v->rule('required', ['id','nombres','apellidos','rfc','curp','telefono','email','regimenFiscal','tipoDeclaracion','impuestoObligacion']);  
-        $v->rule('integer','id');
+        $v->rule('required', ['nombres','apellidos','rfc','curp','telefono','email','regimenFiscal','tipoDeclaracion','impuestoObligacion']);  
+        #$v->rule('integer','id');
         
         if (! $v->validate()) {
             

@@ -33,19 +33,30 @@ return function (App $app) {
       $contribuyentes->get('',[ContribuyenteController::class, 'index'])->setName('contribuyentes');
       $contribuyentes->get('/load',[ContribuyenteController::class, 'load']);
       $contribuyentes->post('',[ContribuyenteController::class, 'store']);
-      $contribuyentes->delete('/{id:[0-9]+}',[ContribuyenteController::class, 'delete']);
+  /*     $contribuyentes->delete('/{id:[0-9]+}',[ContribuyenteController::class, 'delete']);
       $contribuyentes->get('/{id:[0-9]+}', [ContribuyenteController::class, 'get']);
       $contribuyentes->post('/{id:[0-9]+}', [ContribuyenteController::class, 'update']);
+ */     
+      $contribuyentes->delete('/{contribuyente}',[ContribuyenteController::class, 'delete']);
+      $contribuyentes->get('/{contribuyente}', [ContribuyenteController::class, 'get']);
+      $contribuyentes->post('/{contribuyente}', [ContribuyenteController::class, 'update']);
+
 
     })->add(AuthMiddleware::class);
 
-     $app->group('/honorarios', function (RouteCollectorProxy $transactions) {
-        $transactions->get('', [HonorarioController::class, 'index'])->setName('honorarios');
-        $transactions->get('/load', [HonorarioController::class, 'load']);
-        $transactions->post('', [HonorarioController::class, 'store']);
-        $transactions->delete('/{id:[0-9]+}', [HonorarioController::class, 'delete']);
+     $app->group('/honorarios', function (RouteCollectorProxy $honorarios) {
+        $honorarios->get('', [HonorarioController::class, 'index'])->setName('honorarios');
+        $honorarios->get('/load', [HonorarioController::class, 'load']);
+        $honorarios->post('', [HonorarioController::class, 'store']);
+     /*    $transactions->delete('/{id:[0-9]+}', [HonorarioController::class, 'delete']);
         $transactions->get('/{id:[0-9]+}', [HonorarioController::class, 'get']);
         $transactions->post('/{id:[0-9]+}', [HonorarioController::class, 'update']);
+ */
+        $honorarios->delete('/{honorario}', [HonorarioController::class, 'delete']);
+        $honorarios->get('/{honorario}', [HonorarioController::class, 'get']);
+        $honorarios->post('/{honorario}', [HonorarioController::class, 'update']);
+        $honorarios->post('/{honorario}/revisado', [HonorarioController::class, 'alternarRevisado']);
+
     })->add(AuthMiddleware::class);
 
 

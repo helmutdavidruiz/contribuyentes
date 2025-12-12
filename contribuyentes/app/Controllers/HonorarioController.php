@@ -31,7 +31,7 @@ class HonorarioController
     ) {
     }
 
-    public function index(Request $request, Response $response): Response
+    public function index(Response $response): Response
     {
         return $this->twig->render(
             $response,
@@ -64,22 +64,22 @@ class HonorarioController
         return $response;
     }
 
-   public function delete(Request $request, Response $response, array $args): Response
+   public function delete(Response $response, Honorario $honorario): Response
     {
-        $honorario= $this->honorarioService->getById((int) $args['id']);
+       # $honorario= $this->honorarioService->getById((int) $args['id']);
 
         $this->entityManagerService->delete($honorario, true);
 
         return $response;
     } 
 
-    public function get(Request $request, Response $response, array $args): Response
+    public function get(Response $response, Honorario $honorario): Response
     {
-        $honorario = $this->honorarioService->getById((int) $args['id']);
+        #$honorario = $this->honorarioService->getById((int) $args['id']);
 
-        if (! $honorario) {
+      /*   if (! $honorario) {
             return $response->withStatus(404);
-        }
+        } */
 
         $data = [
             'id'          => $honorario->getId(),
@@ -96,17 +96,17 @@ class HonorarioController
         return $this->responseFormatter->asJson($response, $data);
     }
 
-    public function update(Request $request, Response $response, array $args): Response
+    public function update(Request $request, Response $response, Honorario $honorario): Response
     {
         $data = $this->requestValidatorFactory->make(HonorarioRequestValidator::class)->validate(
-            $args + $request->getParsedBody()
+            $request->getParsedBody()
         );
 
-        $id = (int) $data['id'];
+      /*   $id = (int) $data['id'];
 
         if (! $id || ! ($honorario = $this->honorarioService->getById($id))) {
             return $response->withStatus(404);
-        }
+        } */
 
          $this->entityManagerService->sync(
         $this->honorarioService->update(
@@ -141,6 +141,7 @@ class HonorarioController
             'concepto'         => $honorario->getConcepto(),
             'observaciones'    => $honorario->getObservaciones(),
             'contribuyente'    => $honorario->getContribuyente()->getIdentificador(),
+            'fueRevisado'    => $honorario->fueRevisado(),
             ];
         };
 
@@ -154,13 +155,13 @@ class HonorarioController
         );
     }
 
-     public function alternarRevisado(Request $request, Response $response, array $args): Response
+     public function alternarRevisado(Response $response, Honorario $honorario): Response
     {
-        $id = (int) $args['id'];
+       /*  $id = (int) $args['id'];
 
         if (! $id || ! ($honorario = $this->honorarioService->getById($id))) {
             return $response->withStatus(404);
-        }
+        } */
 
         $this->honorarioService->alternarRevisado($honorario);
         $this->entityManagerService->sync();

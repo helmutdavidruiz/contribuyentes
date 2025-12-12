@@ -9,11 +9,39 @@ window.addEventListener('DOMContentLoaded', function () {
 
     const table = new DataTable('#honorariosTable', {
         language: {
-        url: '//cdn.datatables.net/plug-ins/2.3.4/i18n/es-ES.json',
+        "sProcessing":     "Procesando...",
+        "sLengthMenu":     "Mostrar _MENU_ registros",
+        "sZeroRecords":    "No se encontraron resultados",
+        "sEmptyTable":     "Ningún dato disponible en esta tabla",
+        "sInfo":           "Mostrando _START_ a _END_ de _TOTAL_ registros",
+        "sInfoEmpty":      "Mostrando 0 a 0 de 0 registros",
+        "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+        "sInfoPostFix":    "",
+        "sSearch":         "Buscar:",
+        "sUrl":            "",
+        "sInfoThousands":  ",",
+        "sLoadingRecords": "Cargando...",
+        "oPaginate": {
+            "sFirst":    "Primero",
+            "sLast":     "Último",
+            "sNext":     "Siguiente",
+            "sPrevious": "Anterior"
+        },
+        "oAria": {
+            "sSortAscending":  ": Activar para ordenar la columna de forma ascendente",
+            "sSortDescending": ": Activar para ordenar la columna de forma descendente"
+        }
        },
         serverSide: true,
         ajax: '/honorarios/load',
         orderMulti: false,
+         rowCallback: (row, data) => {
+            if (! data.fueRevisado) {
+                row.classList.add('fw-bold')
+            }
+
+            return row
+        },
         columns: [
             {data: "contribuyente"},
             {data: "fecha"},
@@ -63,13 +91,28 @@ window.addEventListener('DOMContentLoaded', function () {
             {
                 sortable: false,
                 data: row => `
-                    <div class="d-flex flex-">
-                        <button type="submit" class="btn btn-outline-primary delete-honorario-btn" data-id="${ row.id }">
-                            <i class="bi bi-trash3-fill"></i>
-                        </button>
-                        <button class="ms-2 btn btn-outline-primary edit-honorario-btn" data-id="${ row.id }">
-                            <i class="bi bi-pencil-fill"></i>
-                        </button>
+                    <div class="d-flex gap-2">
+                        <div>
+                            <i class="bi ${ row.fueRevisado ? 'bi-check-circle-fill text-success' : 'bi-check-circle' } alternar-revisado-btn fs-4" 
+                                role="button" data-id="${ row.id }"></i>
+                        </div>
+                        <div class="dropdown">
+                            <i class="bi bi-gear fs-4" role="button" data-bs-toggle="dropdown"></i>
+
+                            <ul class="dropdown-menu">
+                               
+                                <li>
+                                    <a class="dropdown-item edit-honorario-btn" href="#" data-id="${ row.id }">
+                                        <i class="bi bi-pencil-fill"></i> Editar
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item delete-honorario-btn" href="#" data-id="${ row.id }">
+                                        <i class="bi bi-trash3-fill"></i> Eliminar
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 `
             }
@@ -79,6 +122,8 @@ window.addEventListener('DOMContentLoaded', function () {
     document.querySelector('#honorariosTable').addEventListener('click', function (event) {
         const editBtn   = event.target.closest('.edit-honorario-btn')
         const deleteBtn = event.target.closest('.delete-honorario-btn')
+         const alternarRevisadoBtn = event.target.closest('.alternar-revisado-btn')
+
 
         if (editBtn) {
             const honorarioId = editBtn.getAttribute('data-id')
@@ -86,7 +131,7 @@ window.addEventListener('DOMContentLoaded', function () {
             get(`/honorarios/${ honorarioId }`)
                 .then(response => response.json())
                 .then(response => openEditHonorarioModal(editHonorarioModal, response))
-        } else {
+        } else if(deleteBtn){
             const honorarioId = deleteBtn.getAttribute('data-id')
 
             if (confirm('¿Esta seguro de eliminar este honorario?')) {
@@ -96,7 +141,17 @@ window.addEventListener('DOMContentLoaded', function () {
                     }
                 })
             }
+        }else if (alternarRevisadoBtn) {
+            const honorarioId = alternarRevisadoBtn.getAttribute('data-id')
+
+            post(`/honorarios/${ honorarioId }/revisado`).then(response => {
+                if (response.ok) {
+                    table.draw()
+                }
+            })
         }
+
+
     })
 
     document.querySelector('.create-honorario-btn').addEventListener('click', function (event) {
@@ -106,6 +161,7 @@ window.addEventListener('DOMContentLoaded', function () {
                     table.draw()
 
                     newHonorarioModal.hide()
+                    
                 }
             })
     })

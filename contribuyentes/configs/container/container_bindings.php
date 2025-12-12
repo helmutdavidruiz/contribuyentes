@@ -83,6 +83,10 @@ return [
 
         $ormConfig->addFilter('user', UserFilter::class);
 
+        if (!$config->get('doctrine.dev_mode')) {
+            $ormConfig->setAutoGenerateProxyClasses(true);
+        }
+
         if (class_exists('DoctrineExtensions\Query\Mysql\Year')) {
             $ormConfig->addCustomDatetimeFunction('YEAR', Year::class);
         }

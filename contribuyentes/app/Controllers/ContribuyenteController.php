@@ -25,7 +25,7 @@ class ContribuyenteController{
                               { }
 
 
-    public function index(Request $request, Response $response): Response{
+    public function index(Response $response): Response{
       
         return $this->twig->render(
           $response, 'contribuyentes/index.twig',
@@ -39,7 +39,7 @@ class ContribuyenteController{
 
         $data=$this->requestValidatorFactory->make(CreateContribuyenteRequestValidator::class)->validate($request->getParsedBody());
         
-        #var_dump($data);
+       
        
         $contribuyente = $this->contribuyenteService->crear(new ContribuyenteData($data['nombres'],$data['apellidos'],$data['rfc'],$data['curp'],$data['telefono'],$data['email'],$data['regimenFiscal'],$data['tipoDeclaracion'],$data['impuestoObligacion']), $request->getAttribute('user'));
         
@@ -48,9 +48,9 @@ class ContribuyenteController{
         return $response->withHeader('Location','/contribuyentes')->withStatus(302);
     }
 
-    public function delete(Request $request, Response $response, array $args): Response{
+    public function delete(Response $response, Contribuyente $contribuyente): Response{
       
-        $contribuyente = $this->contribuyenteService->getById((int) $args['id']);
+       # $contribuyente = $this->contribuyenteService->getById((int) $args['id']);
 
         $this->entityManagerService->delete($contribuyente, true);
        
@@ -59,13 +59,15 @@ class ContribuyenteController{
 
     }
 
-       public function get(Request $request, Response $response, array $args): Response
+       public function get(Response $response, Contribuyente $contribuyente): Response
     {
-        $contribuyente = $this->contribuyenteService->getById((int) $args['id']);
 
+        
+       # $contribuyente = $this->contribuyenteService->getById((int) $args['id']);
+/* 
         if (! $contribuyente) {
             return $response->withStatus(404);
-        }
+        } */
 
         $data = ['id' => $contribuyente->getId(), 
                  //'identificador' => $contribuyente->getIdentificador(),
@@ -80,27 +82,31 @@ class ContribuyenteController{
                  'impuestoObligacion' => $contribuyente->getImpuestoObligacion(),
                  ];
 
+                 
          return   $this->responseFormatter->asJson($response, $data);
         
     } 
 
-    public function update(Request $request, Response $response, array $args): Response
+    public function update(Request $request, Response $response, Contribuyente $contribuyente): Response
     {
        
-        $data=$this->requestValidatorFactory->make(UpdateContribuyenteRequestValidator::class)->validate($args +
+        $data=$this->requestValidatorFactory->make(UpdateContribuyenteRequestValidator::class)->validate(
             $request->getParsedBody());
 
+            var_dump($request->getParsedBody());
 
-        $contribuyente = $this->contribuyenteService->getById((int) $args['id']);
+      #  $contribuyente = $this->contribuyenteService->getById((int) $args['id']);
 
        
 
-        if (! $contribuyente) {
+     /*    if (! $contribuyente) {
             return $response->withStatus(404);
         }
-
-        
-        $this->entityManagerService->sync($this->contribuyenteService->actualizar($contribuyente,new ContribuyenteData($data['nombres'],$data['apellidos'],$data['rfc'],$data['curp'],$data['telefono'],$data['email'],$data['regimenFiscal'],$data['tipoDeclaracion'],$data['impuestoObligacion'])));
+ */
+        var_dump($data);
+        $this->entityManagerService->sync($this->contribuyenteService->actualizar
+                                            ($contribuyente,
+                                                      new ContribuyenteData($data['nombres'],$data['apellidos'],$data['rfc'],$data['curp'],$data['telefono'],$data['email'],$data['regimenFiscal'],$data['tipoDeclaracion'],$data['impuestoObligacion'])));
         return   $response;
         
     } 

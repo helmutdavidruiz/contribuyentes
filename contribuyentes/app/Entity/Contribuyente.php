@@ -60,7 +60,7 @@ class Contribuyente{
     #[ManyToOne(inversedBy:'contribuyentes')]
     private User $user;
 
-    #[OneToMany(mappedBy:'contribuyente', targetEntity: Honorario::class)]
+    #[OneToMany(mappedBy:'contribuyente', targetEntity: Honorario::class, cascade:['remove'])]
     private Collection $honorarios;
 
     public function __construct(){
