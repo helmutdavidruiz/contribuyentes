@@ -9,14 +9,21 @@
 
 {% block content %}
     <div class="contribuyentes container content-body">
-        <div class="text-end">
+        <div class="text-end  mb-4">
+           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exportContribuyentesModal">
+                <i class="bi bi-plus-circle me-1"></i>
+                Exportar Contribuyentes
+            </button>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newContribuyenteModal">
                 <i class="bi bi-plus-circle me-1"></i>
                 Nuevo Contribuyente
             </button>
+            
         </div>
+     
         {% include 'contribuyentes/contribuyente_modal.twig' with {modal: {title: 'Crear Contribuyente', id: 'newContribuyenteModal', isEdit: false}} %}
         {% include 'contribuyentes/contribuyente_modal.twig' with {modal: {title: 'Editar Contribuyente', id: 'editContribuyenteModal', isEdit: true}} %}
+        {% include 'contribuyentes/exportar_contribuyentes_modal.twig' %}
 
         <div>
                 <table id="contribuyentesTable">

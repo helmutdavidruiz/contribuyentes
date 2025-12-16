@@ -32,6 +32,7 @@ return function (App $app) {
     $app->group('/contribuyentes',function (RouteCollectorProxy $contribuyentes) {
       $contribuyentes->get('',[ContribuyenteController::class, 'index'])->setName('contribuyentes');
       $contribuyentes->get('/load',[ContribuyenteController::class, 'load']);
+      $contribuyentes->post('/export', [ContribuyenteController::class, 'export']);
       $contribuyentes->post('',[ContribuyenteController::class, 'store']);
   /*     $contribuyentes->delete('/{id:[0-9]+}',[ContribuyenteController::class, 'delete']);
       $contribuyentes->get('/{id:[0-9]+}', [ContribuyenteController::class, 'get']);
@@ -40,7 +41,7 @@ return function (App $app) {
       $contribuyentes->delete('/{contribuyente}',[ContribuyenteController::class, 'delete']);
       $contribuyentes->get('/{contribuyente}', [ContribuyenteController::class, 'get']);
       $contribuyentes->post('/{contribuyente}', [ContribuyenteController::class, 'update']);
-
+      
 
     })->add(AuthMiddleware::class);
 
@@ -56,6 +57,7 @@ return function (App $app) {
         $honorarios->get('/{honorario}', [HonorarioController::class, 'get']);
         $honorarios->post('/{honorario}', [HonorarioController::class, 'update']);
         $honorarios->post('/{honorario}/revisado', [HonorarioController::class, 'alternarRevisado']);
+      
 
     })->add(AuthMiddleware::class);
 

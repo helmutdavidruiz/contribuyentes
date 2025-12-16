@@ -103,7 +103,7 @@ class ContribuyenteController{
             return $response->withStatus(404);
         }
  */
-        var_dump($data);
+       // var_dump($data);
         $this->entityManagerService->sync($this->contribuyenteService->actualizar
                                             ($contribuyente,
                                                       new ContribuyenteData($data['nombres'],$data['apellidos'],$data['rfc'],$data['curp'],$data['telefono'],$data['email'],$data['regimenFiscal'],$data['tipoDeclaracion'],$data['impuestoObligacion'])));
@@ -144,4 +144,17 @@ class ContribuyenteController{
             $totalContribuyentes
         );
     }
+
+    
+    public function export(Request $request, Response $response): Response
+    {
+      
+
+    /*     return $response->withHeader('Content-Type', 'application/vnd.ms-excel')
+                        ->withHeader('Content-Disposition', 'attachment; filename="contribuyentes.xls"')
+                        ->withBody($this->contribuyenteService->exportarExcel()); */
+
+        return $response->withStatus(200);
+    }
+
 }
