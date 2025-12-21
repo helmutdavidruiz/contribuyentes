@@ -9,11 +9,13 @@ use App\Contracts\RequestValidatorFactoryInterface;
 use Slim\Views\Twig;
 use App\RequestValidators\CreateContribuyenteRequestValidator;
 use App\Services\ContribuyenteService;
+
 use App\DataObjects\ContribuyenteData;
 use App\ResponseFormatter;
 use App\RequestValidators\UpdateContribuyenteRequestValidator;
 use App\Entity\Contribuyente;
 use App\Services\RequestService;
+use App\Files\UtilExcel;
 class ContribuyenteController{
 
     public function __construct(private readonly Twig $twig,
@@ -21,7 +23,8 @@ class ContribuyenteController{
                                 private readonly ContribuyenteService $contribuyenteService,
                                 private readonly ResponseFormatter $responseFormatter,
                                 private readonly RequestService $requestService,
-                                private readonly EntityManagerServiceInterface $entityManagerService)
+                                private readonly EntityManagerServiceInterface $entityManagerService,
+                                private readonly UtilExcel $utilExcel)
                               { }
 
 
@@ -93,7 +96,7 @@ class ContribuyenteController{
         $data=$this->requestValidatorFactory->make(UpdateContribuyenteRequestValidator::class)->validate(
             $request->getParsedBody());
 
-            var_dump($request->getParsedBody());
+           // var_dump($request->getParsedBody());
 
       #  $contribuyente = $this->contribuyenteService->getById((int) $args['id']);
 
@@ -146,15 +149,26 @@ class ContribuyenteController{
     }
 
     
-    public function export(Request $request, Response $response): Response
+    public function export(Response $response): Response
     {
       
+       $contribuyentes=  $this->contribuyenteService->getSoloContribuyentes();
 
-    /*     return $response->withHeader('Content-Type', 'application/vnd.ms-excel')
-                        ->withHeader('Content-Disposition', 'attachment; filename="contribuyentes.xls"')
-                        ->withBody($this->contribuyenteService->exportarExcel()); */
+       $honorarios =  $this->contribuyenteService->getSoloHonorarios();
+      
+        $filename = $this->utilExcel->creaFile($contribuyentes, $honorarios);
 
-        return $response->withStatus(200);
+ 
+
+      // $this->utilExcel->convertirArrayEnExcel($data);
+
+    /* return $response->withHeader('Content-Type', 'application/octet-stream')
+                        ->withHeader('Content-Disposition', 'attachment; filename="contribuyentes.xlsx"')
+                        
+                        ->withBody($this->utilExcel->exportarExcel($contribuyentes, $honorarios)); 
+ */
+         $response= $this->utilExcel->downloadFile('/var/www/public/' . $filename, $filename);
+        return $response;
     }
 
 }

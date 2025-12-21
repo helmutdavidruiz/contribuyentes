@@ -161,4 +161,30 @@ use App\DataObjects\DataTableQueryParams;
 
         return $query->getArrayResult();
     }
+
+
+     public function getSoloContribuyentes(): array
+    {
+
+        $query = $this->entityManager->createQuery(
+            'SELECT c
+             FROM  App\Entity\Contribuyente c'
+        );
+
+        return $query->getArrayResult();
+    }
+
+    public function getSoloHonorarios(): array
+    {
+
+        $query = $this->entityManager->createQuery(
+            'SELECT h, c.identificador
+             FROM  App\Entity\Honorario h
+             JOIN h.contribuyente c'
+        );
+
+        return $query->getArrayResult();
+    }
+
+
 }

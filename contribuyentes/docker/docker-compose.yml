@@ -12,6 +12,10 @@ services:
     container_name: contribuyentes-app
     restart: always
     working_dir: /var/www/
+    ports:
+      - "9229:9229" # Map container's debug port to host's port
+    
+    #command: npm run watch  # Start the application with debugging enabled
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:

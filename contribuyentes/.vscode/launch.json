@@ -1,4 +1,4 @@
-/* {
+/*  {
     // Use IntelliSense to learn about possible attributes.
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
@@ -10,20 +10,28 @@
             "type": "php",
             "request": "launch",
             "pathMappings":{
-                "/var/www":"/Users/helmut/contribuyentes"
+                "/var/www":"/home/helmut/Aplicacion/contribuyentes"
             }
         }
     ]
-} */
+} 
+ */
+
 
 {
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "type": "chrome",
-      "request": "launch",
-      "name": "Launch my cool app",
-      "url": "http://localhost:8000"
-    }
-  ]
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "name": "Docker: Attach to Encore Node",
+            "type": "node",
+            "request": "attach",
+            "restart": true,
+            "port": 9229,
+            "address": "172.0.0.1",
+            "localRoot": "/home/helmut/Aplicacion/contribuyentes", // Your local project root path
+            "remoteRoot": "/var/www", // The path to your code inside the container
+        
+        }
+    ]
 }

@@ -109,11 +109,11 @@ window.addEventListener('DOMContentLoaded', function () {
             })
     })
 
-      document.querySelector('.export-contribuyentes-btn').addEventListener('click', function (event) {
-        
+    document.querySelector('.export-contribuyentes-btn').addEventListener('click', function (event) {
 
-        const formData = new FormData()
-        const button   = event.currentTarget
+
+      
+        const button = event.currentTarget
         //formData.append('format', exportContribuyentesModal._element.querySelector('select[name="format"]').value)
         button.setAttribute('disabled', true)
 
@@ -123,53 +123,104 @@ window.addEventListener('DOMContentLoaded', function () {
             <div class="spinner-grow spinner-grow-sm text-light" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
-            <div class="spinner-grow spinner-grow-sm text-light" role="status">
-              <span class="visually-hidden">Loading...</span>
-            </div>
-            <div class="spinner-grow spinner-grow-sm text-light" role="status">
-              <span class="visually-hidden">Loading...</span>
-            </div>
         `
-           post(`/contribuyentes/export`)
-            .then(response => {
+        post(`/contribuyentes/export`)
+            .then(async response => {
                 button.removeAttribute('disabled')
                 button.innerHTML = btnHtml
+                
 
                 if (response.ok) {
-                    table.draw()
 
-                   exportContribuyentesModal.hide()
+                    
+
+                    
+               const reader = response.body.getReader();
+               const contentChunks = [];
+               let receivedLength = 0;
+               const totalLength = response.headers.get('Content-Length');
+
+                     // Process the stream in a loop
+             while (true) {
+               const { done, value } = await reader.read(); // Read a chunk
+                 if (done) {
+                   break; // Exit the loop when the stream is finished
+              }
+             contentChunks.push(value);
+             receivedLength += value.length;
+        
+              // Optional: Update progress indicator
+            if (totalLength) {
+                const progress = Math.round((receivedLength / totalLength) * 100);
+                 console.log(`Download progress: ${progress}%`);
+            }
+      }
+
+        const filename='report_contribuyentes.xls';
+    
+          // Combine chunks and initiate download
+          iniciandoDescarga(contentChunks, filename, response.headers.get('Content-Type'));
+        
+             button.innerHTML = 'Download Complete';
+              table.draw()
+
+
+                    exportContribuyentesModal.hide()
                 }
             })
-         
-        }) 
 
 
     })
 
-    function getContribuyenteFormData(modal) {
-        let data = {}
-        const fields = [
-            ...modal._element.getElementsByTagName('input'),
-            ...modal._element.getElementsByTagName('select')
-        ]
 
-        fields.forEach(select => {
-            data[select.name] = select.value
-        })
+})
 
-        return data
+function getContribuyenteFormData(modal) {
+    let data = {}
+    const fields = [
+        ...modal._element.getElementsByTagName('input'),
+        ...modal._element.getElementsByTagName('select')
+    ]
+
+    fields.forEach(select => {
+        data[select.name] = select.value
+    })
+
+    return data
+}
+
+function openEditContribuyenteModal(modal, { id, ...data }) {
+    for (let name in data) {
+
+        const nameInput = modal._element.querySelector(`[name="${name}"]`)
+
+        nameInput.value = data[name]
     }
 
-    function openEditContribuyenteModal(modal, { id, ...data }) {
-        for (let name in data) {
+    modal._element.querySelector('.save-contribuyente-btn').setAttribute('data-id', id)
 
-            const nameInput = modal._element.querySelector(`[name="${name}"]`)
+    modal.show()
+}
 
-            nameInput.value = data[name]
-        }
 
-        modal._element.querySelector('.save-contribuyente-btn').setAttribute('data-id', id)
+function iniciandoDescarga(chunks, filename, contentType) {
+    // Combine the chunks into a single Blob
+    const blob = new Blob(chunks, { type: contentType || 'application/octet-stream' });
+    
+    // Create a temporary URL for the Blob
+    const url = URL.createObjectURL(blob);
 
-        modal.show()
-    }
+    // Create a hidden anchor element to trigger the download
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename || 'download'; // Set the download filename
+    a.style.display = 'none';
+    document.body.appendChild(a);
+
+    // Simulate a click to start the download
+    a.click();
+
+    // Clean up the DOM and revoke the object URL to free memory
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}

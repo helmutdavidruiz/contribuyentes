@@ -37,14 +37,26 @@ COPY php.ini "${PHP_INI_DIR}/conf.d/custom.ini"
 
 
 
-#RUN pecl install xdebug \
-   # && docker-php-ext-enable xdebug
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
 
-#COPY xdebug.ini "${PHP_INI_DIR}/conf.d"
+COPY xdebug.ini "${PHP_INI_DIR}/conf.d"
+
 RUN groupadd --force -g $GROUP_ID $USER
 RUN useradd -ms /bin/bash --no-user-group -g $GROUP_ID -u 1337 $USER
 RUN usermod -u $USER_ID $USER
 RUN usermod -aG sudo $USER
 USER $USER
+
+
+# Example for a Node.js app
+#CMD ["node", "--inspect=0.0.0.0:9229", "/var/www/resources/js/contribuyentes.js"] 
+
+EXPOSE 9229
+
+# COPY package*.json ./
+# RUN npm install
+# COPY . .
+#CMD ["npm", "start"]
 
 
