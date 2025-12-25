@@ -2,52 +2,51 @@
   "entrypoints": {
     "app": {
       "js": [
-        "/build/runtime.5a2c58a3.js",
-        "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js.4a81a2f0.js",
-        "/build/app.8d58fa84.js"
+        "/build/runtime.98656f55.js",
+        "/build/336.9515e8f1.js",
+        "/build/app.24fad415.js"
       ],
       "css": [
-        "/build/vendors-node_modules_datatables_net-dt_css_jquery_dataTables_css.e62f97ec.css",
-        "/build/app.30656792.css"
+        "/build/app.251c0b81.css"
       ]
     },
     "dashboard": {
       "js": [
-        "/build/runtime.5a2c58a3.js",
-        "/build/vendors-node_modules_core-js_modules_es_array_filter_js-node_modules_core-js_modules_es_array-532259.7345b442.js",
-        "/build/vendors-node_modules_core-js_modules_es_array_fill_js-node_modules_chart_js_auto_auto_js.ad11cb6d.js",
-        "/build/dashboard.20d280d5.js"
+        "/build/runtime.98656f55.js",
+        "/build/208.dd76f9f2.js",
+        "/build/847.fb374a20.js",
+        "/build/dashboard.11bac700.js"
       ],
       "css": [
-        "/build/dashboard.94cd8838.css"
+        "/build/dashboard.670410ac.css"
       ]
     },
     "contribuyentes": {
       "js": [
-        "/build/runtime.5a2c58a3.js",
-        "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js.4a81a2f0.js",
-        "/build/vendors-node_modules_core-js_modules_es_array_filter_js-node_modules_core-js_modules_es_array-532259.7345b442.js",
-        "/build/vendors-node_modules_core-js_modules_es_array_concat_js-node_modules_core-js_modules_es_array-2b880f.e54ef6a5.js",
-        "/build/vendors-node_modules_core-js_modules_es_array_reverse_js-node_modules_core-js_modules_es_func-b3c9be.e8755e98.js",
-        "/build/contribuyentes.548105a8.js"
+        "/build/runtime.98656f55.js",
+        "/build/336.9515e8f1.js",
+        "/build/208.dd76f9f2.js",
+        "/build/314.44dba36f.js",
+        "/build/512.cafad236.js",
+        "/build/contribuyentes.541210d4.js"
       ]
     },
     "honorarios": {
       "js": [
-        "/build/runtime.5a2c58a3.js",
-        "/build/vendors-node_modules_bootstrap_dist_js_bootstrap_esm_js.4a81a2f0.js",
-        "/build/vendors-node_modules_core-js_modules_es_array_filter_js-node_modules_core-js_modules_es_array-532259.7345b442.js",
-        "/build/vendors-node_modules_core-js_modules_es_array_concat_js-node_modules_core-js_modules_es_array-2b880f.e54ef6a5.js",
-        "/build/honorarios.6a66e54a.js"
+        "/build/runtime.98656f55.js",
+        "/build/336.9515e8f1.js",
+        "/build/208.dd76f9f2.js",
+        "/build/314.44dba36f.js",
+        "/build/honorarios.2b3b3350.js"
       ]
     },
     "auth": {
       "js": [
-        "/build/runtime.5a2c58a3.js",
-        "/build/auth.7746622e.js"
+        "/build/runtime.98656f55.js",
+        "/build/auth.0a2f629d.js"
       ],
       "css": [
-        "/build/auth.0e96676f.css"
+        "/build/auth.31d6cfe0.css"
       ]
     }
   }

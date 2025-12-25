@@ -30,30 +30,30 @@ use App\DataObjects\DataTableQueryParams;
 
      public function store(Contribuyente $contribuyente, ContribuyenteData $data): Contribuyente
     {
-        $contribuyente->setNombres($data->nombres);
-        $contribuyente->setApellidos($data->apellidos);
-        $contribuyente->setRfc($data->rfc);
-        $contribuyente->setCurp($data->curp);
+        $contribuyente->setNombres(strtoupper($data->nombres));
+        $contribuyente->setApellidos(strtoupper($data->apellidos));
+        $contribuyente->setRfc(strtoupper($data->rfc));
+        $contribuyente->setCurp(strtoupper($data->curp));
         $contribuyente->setTelefono($data->telefono);
-        $contribuyente->setEmail($data->email);
-        $contribuyente->setRegimenFiscal($data->regimenFiscal);
-        $contribuyente->setTipoDeclaracion($data->tipoDeclaracion);
-        $contribuyente->setImpuestoObligacion($data->impuestoObligacion);
+        $contribuyente->setEmail(strtoupper($data->email));
+        $contribuyente->setRegimenFiscal(strtoupper($data->regimenFiscal));
+        $contribuyente->setTipoDeclaracion(strtoupper($data->tipoDeclaracion));
+        $contribuyente->setImpuestoObligacion(strtoupper($data->impuestoObligacion));
         $contribuyente->setIdentificador(str_pad((string)$this->getCount(),4,'0',STR_PAD_LEFT).str_pad(substr($this->getCaracteres($data->nombres).$this->getCaracteres($data->apellidos),0,4),4,'X'));
 
         return $contribuyente;
     }
       public function actualizar(Contribuyente $contribuyente, ContribuyenteData $data): Contribuyente
     {
-        $contribuyente->setNombres($data->nombres);
-        $contribuyente->setApellidos($data->apellidos);
-        $contribuyente->setRfc($data->rfc);
-        $contribuyente->setCurp($data->curp);
+        $contribuyente->setNombres(strtoupper($data->nombres));
+        $contribuyente->setApellidos(strtoupper($data->apellidos));
+        $contribuyente->setRfc(strtoupper($data->rfc));
+        $contribuyente->setCurp(strtoupper($data->curp));
         $contribuyente->setTelefono($data->telefono);
-        $contribuyente->setEmail($data->email);
-        $contribuyente->setRegimenFiscal($data->regimenFiscal);
-        $contribuyente->setTipoDeclaracion($data->tipoDeclaracion);
-        $contribuyente->setImpuestoObligacion($data->impuestoObligacion);
+        $contribuyente->setEmail(strtoupper($data->email));
+        $contribuyente->setRegimenFiscal(strtoupper($data->regimenFiscal));
+        $contribuyente->setTipoDeclaracion(strtoupper($data->tipoDeclaracion));
+        $contribuyente->setImpuestoObligacion(strtoupper($data->impuestoObligacion));
        # $contribuyente->setIdentificador(str_pad($contribuyente->getId().$this->getCaracteres($data->nombres).$this->getCaracteres($data->apellidos),5,'0'));
         
         return $contribuyente;

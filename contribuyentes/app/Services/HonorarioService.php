@@ -77,8 +77,8 @@ class HonorarioService
         $honorario->setTransferencia($honorarioData->transferencia);
         $total = $honorarioData->honorario+$honorarioData->impuesto+$honorarioData->transferencia;
         $honorario->setTotal($total);
-        $honorario->setConcepto($honorarioData->concepto);
-        $honorario->setObservaciones($honorarioData->observaciones);
+        $honorario->setConcepto(strtoupper($honorarioData->concepto));
+        $honorario->setObservaciones(strtoupper($honorarioData->observaciones));
         #$honorario->setContribuyente($honorarioData->contribuyente);
 
         return $honorario;
@@ -92,8 +92,8 @@ class HonorarioService
         $honorario->setTransferencia($honorarioData->transferencia);
         $total = $honorarioData->honorario+$honorarioData->impuesto+$honorarioData->transferencia;
         $honorario->setTotal($total);
-        $honorario->setConcepto($honorarioData->concepto);
-        $honorario->setObservaciones($honorarioData->observaciones);
+        $honorario->setConcepto(strtoupper($honorarioData->concepto));
+        $honorario->setObservaciones(strtoupper($honorarioData->observaciones));
         $honorario->setContribuyente($honorarioData->contribuyente);
 
         return $honorario;
