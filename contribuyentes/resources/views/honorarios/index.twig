@@ -3,6 +3,7 @@
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('honorarios') }}
+     
 {% endblock %}
 
 {% block title %}Honorarios{% endblock %}
@@ -10,11 +11,15 @@
 {% block content %}
     <div class="honorarios container content-body">
         <div class="text-end mb-4">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newHonorarioModal">
+            <button  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newHonorarioModal">
                 <i class="bi bi-plus-circle me-1"></i>
                 Nuevo Honorario
             </button>
+               
         </div>
+
+      
+
         {% include 'honorarios/honorario_modal.twig' with {modal: {title: 'Crear Honorario', id: 'newHonorarioModal', isEdit: false}} %}
         {% include 'honorarios/honorario_modal.twig' with {modal: {title: 'Editar Honorario', id: 'editHonorarioModal', isEdit: true}} %}
         <div>
@@ -37,3 +42,4 @@
         </div>
     </div>
 {% endblock %}
+

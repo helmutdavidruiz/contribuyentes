@@ -8,6 +8,12 @@ window.addEventListener('DOMContentLoaded', function () {
     const editContribuyenteModal = new Modal(document.getElementById('editContribuyenteModal'))
     const exportContribuyentesModal = new Modal(document.getElementById('exportContribuyentesModal'))
 
+      $(document).ready(function(){
+          $('#newContribuyenteModal').on('hidden.bs.modal', function () {
+                   $(this).find("input,textarea,select").val('');
+        })
+      }); 
+
     const table = new DataTable('#contribuyentesTable', {
         language: {
             "sProcessing": "Procesando...",
@@ -91,7 +97,7 @@ window.addEventListener('DOMContentLoaded', function () {
             .then(response => {
                 if (response.ok) {
                     table.draw()
-
+                  
                     newContribuyenteModal.hide()
                 }
             })

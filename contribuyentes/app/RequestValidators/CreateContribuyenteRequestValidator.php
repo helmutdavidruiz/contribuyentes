@@ -15,7 +15,7 @@ class CreateContribuyenteRequestValidator implements RequestValidatorInterface{
 
          $v = new Validator($data);
         $v->rule('required', ['nombres','apellidos','rfc','curp','telefono','email','regimenFiscal','tipoDeclaracion','impuestoObligacion']);  
-
+        $v->rule('numeric', 'telefono');
 
 
             

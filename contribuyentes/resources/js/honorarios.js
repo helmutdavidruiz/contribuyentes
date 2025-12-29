@@ -3,9 +3,49 @@ import { get, post, del } from "./ajax"
 import DataTable          from "datatables.net"
 
 
+               
 window.addEventListener('DOMContentLoaded', function () {
+
+  
+
+
     const newHonorarioModal  = new Modal(document.getElementById('newHonorarioModal'))
     const editHonorarioModal = new Modal(document.getElementById('editHonorarioModal'))
+
+    $(document).ready(function(){
+        $('#newHonorarioModal').on('hidden.bs.modal', function () {
+            $(this).find("input,textarea,select").val('');
+          })
+    }); 
+    
+    /* const buttonHonorario = document.getElementById("nuevo-honorario-btn");
+      
+    buttonHonorario.addEventListener("click", function() {
+                   // alert("Nuevo Honorario")
+                   $('#newHonorarioModal').on('hidden.bs.modal', function () {
+                   $(this).find("input,textarea,select").val('');
+                  // $(this).find("input[type=checkbox], input[type=radio]").prop("checked", false);
+               // You can also clear validation messages or other dynamic content here
+         })
+
+     }) */
+
+
+     
+   
+
+    /*  $(document).ready(function()
+     {
+   
+
+    // codes works on all bootstrap modal windows in application
+        $('#newHonorarioModal').on('hidden.bs.modal', function(e)
+         { 
+          $(this).removeData();
+         }) 
+
+    
+   }); */
 
     const table = new DataTable('#honorariosTable', {
         language: {
@@ -155,16 +195,21 @@ window.addEventListener('DOMContentLoaded', function () {
     })
 
     document.querySelector('.create-honorario-btn').addEventListener('click', function (event) {
+      
+    
         post(`/honorarios`, getHonorarioFormData(newHonorarioModal), newHonorarioModal._element)
             .then(response => {
                 if (response.ok) {
                     table.draw()
-
-                    newHonorarioModal.hide()
                     
+                    newHonorarioModal.hide()
+                           
+
                 }
             })
     })
+
+   
 
     document.querySelector('.save-honorario-btn').addEventListener('click', function (event) {
         const honorarioId = event.currentTarget.getAttribute('data-id')
@@ -173,11 +218,20 @@ window.addEventListener('DOMContentLoaded', function () {
             .then(response => {
                 if (response.ok) {
                     table.draw()
+
                     editHonorarioModal.hide()
+                    
                 }
             })
     })
+
+
+      
 })
+
+ 
+
+
 
 function getHonorarioFormData(modal) {
     let data     = {}
@@ -192,6 +246,9 @@ function getHonorarioFormData(modal) {
 
     return data
 }
+
+
+
 
 function openEditHonorarioModal(modal, {id, ...data}) {
     for (let name in data) {

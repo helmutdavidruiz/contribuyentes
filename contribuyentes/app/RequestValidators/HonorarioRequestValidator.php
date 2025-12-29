@@ -19,7 +19,7 @@ class HonorarioRequestValidator implements RequestValidatorInterface
     {
         $v = new Validator($data);
 
-        $v->rule('required', ['fecha', 'honorario', 'impuesto','transferencia','concepto','observaciones', 'contribuyente']);
+        $v->rule('required', ['fecha', 'honorario', 'impuesto','transferencia','concepto', 'contribuyente']);
         $v->rule('lengthMax', 'concepto', 255);
         $v->rule('lengthMax', 'observaciones', 255);
         $v->rule('dateFormat', 'dateFormat', 'm/d/Y g:i A');

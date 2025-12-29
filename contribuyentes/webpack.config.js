@@ -24,6 +24,7 @@ Encore
     .addEntry("contribuyentes", "./resources/js/contribuyentes.js")
     .addEntry("honorarios", "./resources/js/honorarios.js")
     .addEntry("auth", "./resources/js/auth.js")
+    .addEntry("clear", "./resources/js/clear.js")
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
@@ -64,5 +65,7 @@ Encore
 
     // enables Sass/SCSS support
     .enableSassLoader()
+
+     .autoProvidejQuery() // fixes modules that expect jQuery to be global
 
 module.exports = Encore.getWebpackConfig()
