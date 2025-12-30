@@ -167,7 +167,7 @@ window.addEventListener('DOMContentLoaded', function () {
           // Combine chunks and initiate download
           iniciandoDescarga(contentChunks, filename, response.headers.get('Content-Type'));
         
-             button.innerHTML = 'Download Complete';
+              // button.innerHTML = 'Download Complete';
               table.draw()
 
 
