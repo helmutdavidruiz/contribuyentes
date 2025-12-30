@@ -160,9 +160,29 @@ window.addEventListener('DOMContentLoaded', function () {
                 const progress = Math.round((receivedLength / totalLength) * 100);
                  console.log(`Download progress: ${progress}%`);
             }
-      }
+           }
 
-        const filename='report_contribuyentes.xls';
+           const contentDisposition = response.headers.get('Content-Disposition');
+    
+          if (!contentDisposition) {
+             console.error("Content-Disposition header not available. Check server CORS configuration.");
+           return;
+          }
+
+          // 2. Extract the filename using a robust parsing method (e.g., regex)
+         // The header can contain 'filename' (ASCII) or 'filename*' (UTF-8 encoded).
+          const filenameRegex = /filename\*?=['"]?(.*?)['"]?(;|$)/i;
+          const matches = contentDisposition.match(filenameRegex);
+          let filename = 'default_filename'; // Fallback filename
+    
+         if (matches && matches[1]) {
+           // Decode the filename if it was URL-encoded (common for filename*)
+            filename = decodeURIComponent(matches[1].replace(/['"]/g, ''));
+        }
+
+       console.log('Filename extraido:', filename);
+
+       // const filename='report_contribuyentes.xls';
     
           // Combine chunks and initiate download
           iniciandoDescarga(contentChunks, filename, response.headers.get('Content-Type'));

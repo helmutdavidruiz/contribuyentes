@@ -3,7 +3,7 @@
   "build/app.js": "/build/app.ecd64973.js",
   "build/dashboard.css": "/build/dashboard.94cd8838.css",
   "build/dashboard.js": "/build/dashboard.20d280d5.js",
-  "build/contribuyentes.js": "/build/contribuyentes.153eb43f.js",
+  "build/contribuyentes.js": "/build/contribuyentes.08655b1a.js",
   "build/honorarios.js": "/build/honorarios.6dadc9f9.js",
   "build/auth.css": "/build/auth.0e96676f.css",
   "build/auth.js": "/build/auth.7746622e.js",
@@ -16,5 +16,6 @@
   "build/vendors-node_modules_datatables_net-dt_css_jquery_dataTables_css.e62f97ec.css": "/build/vendors-node_modules_datatables_net-dt_css_jquery_dataTables_css.e62f97ec.css",
   "build/fonts/bootstrap-icons.woff?": "/build/fonts/bootstrap-icons.1295669c.woff",
   "build/fonts/bootstrap-icons.woff2?": "/build/fonts/bootstrap-icons.92ea18a8.woff2",
-  "build/images/logo.png": "/build/images/logo.d391a209.png"
+  "build/images/logo.png": "/build/images/logo.d391a209.png",
+  "build/vendors-node_modules_core-js_modules_es_array_reverse_js-node_modules_core-js_modules_es_func-5038ab.91077641.js": "/build/vendors-node_modules_core-js_modules_es_array_reverse_js-node_modules_core-js_modules_es_func-5038ab.91077641.js"
 }
