@@ -63,4 +63,15 @@ class EntityManagerService implements EntityManagerServiceInterface
     {
         $this->getFilters()->enable('user')->setParameter('user_id', $userId);
     }
+    
+    public function syncid($entity = null): int
+    {
+        if ($entity) {
+            $this->entityManager->persist($entity);
+        }
+
+        $this->entityManager->flush();
+
+        return $entity->getId();
+    }
 }

@@ -39,7 +39,7 @@ use App\DataObjects\DataTableQueryParams;
         $contribuyente->setRegimenFiscal(strtoupper($data->regimenFiscal));
         $contribuyente->setTipoDeclaracion(strtoupper($data->tipoDeclaracion));
         $contribuyente->setImpuestoObligacion(strtoupper($data->impuestoObligacion));
-        $contribuyente->setIdentificador(str_pad((string)$this->getCount(),4,'0',STR_PAD_LEFT).str_pad(substr($this->getCaracteres($data->nombres).$this->getCaracteres($data->apellidos),0,4),4,'X'));
+        $contribuyente->setIdentificador('');
 
         return $contribuyente;
     }

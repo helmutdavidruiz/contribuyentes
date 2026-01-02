@@ -43,10 +43,17 @@ class ContribuyenteController{
         $data=$this->requestValidatorFactory->make(CreateContribuyenteRequestValidator::class)->validate($request->getParsedBody());
         
        
-       
         $contribuyente = $this->contribuyenteService->crear(new ContribuyenteData($data['nombres'],$data['apellidos'],$data['rfc'],$data['curp'],$data['telefono'],$data['email'],$data['regimenFiscal'],$data['tipoDeclaracion'],$data['impuestoObligacion']), $request->getAttribute('user'));
         
-        $this ->entityManagerService->sync($contribuyente);
+        $id = $this ->entityManagerService->syncid($contribuyente);
+         
+        $contribuyenteId = $this->contribuyenteService->getById($id);
+
+        $contribuyenteId->setIdentificador(str_pad((string)$contribuyente->getId(),4,'0',STR_PAD_LEFT).str_pad(substr($this->contribuyenteService->getCaracteres($contribuyenteId->getNombres()).$this->contribuyenteService->getCaracteres($contribuyenteId->getApellidos()),0,4),4,'X'));
+       
+
+        
+        $this ->entityManagerService->sync($contribuyenteId);
 
         return $response->withHeader('Location','/contribuyentes')->withStatus(302);
     }
